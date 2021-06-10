@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.or.connect.reservation.dto.Category;
 import kr.or.connect.reservation.dto.DisplayInfo;
 import kr.or.connect.reservation.dto.Promotion;
+import kr.or.connect.reservation.dto.ReservationUserComment;
 import kr.or.connect.reservation.service.CategoryService;
+import kr.or.connect.reservation.service.CommentService;
 import kr.or.connect.reservation.service.DisplayInfoService;
 import kr.or.connect.reservation.service.PromotionService;
 
@@ -28,6 +30,9 @@ public class ReservationApiController {
 	
 	@Autowired
 	PromotionService promotionService;
+	
+	@Autowired
+	CommentService commentService;
 	
 	@GetMapping(path="/categories")
 	public Map<String, Object> getCategories() {
@@ -70,6 +75,26 @@ public class ReservationApiController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("size", size);
 		map.put("items", promotions);
+		
+		return map;
+	}
+	
+	@GetMapping(path="/comments")
+	public Map<String, Object> getComments(
+			@RequestParam(name="productId", required=false, defaultValue="0") int productId,
+			@RequestParam(name="start", required=false, defaultValue="0") int start) {
+		
+		// 목록 가져오기
+		List<ReservationUserComment> comments = commentService.getComments(productId);
+		int totalCount = commentService.getTotalCount(productId);
+		int commentCount = commentService.getCommentCount(productId);
+		
+		// 반환할 객체 만들기
+		Map<String, Object> map = new HashMap<>();
+		map.put("reservationUserComments", comments);
+		map.put("totalCount", totalCount);
+		map.put("commentCount", commentCount);
+		
 		
 		return map;
 	}
