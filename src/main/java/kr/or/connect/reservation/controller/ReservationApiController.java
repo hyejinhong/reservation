@@ -86,8 +86,8 @@ public class ReservationApiController {
 		
 		// 목록 가져오기
 		List<ReservationUserComment> comments = commentService.getComments(productId);
-		int totalCount = commentService.getTotalCount(productId);
-		int commentCount = commentService.getCommentCount(productId);
+		int totalCount = commentService.getTotalCount(productId, start);
+		int commentCount = commentService.getCommentCount(productId, start);
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();

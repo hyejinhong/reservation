@@ -29,45 +29,56 @@ public class CommentDao {
 				.usingGeneratedKeyColumns("id");
 	}
 
-	// category_id 별 조회 결과 가져오기
+	// product_id 별 조회 결과 가져오기
 	public List<ReservationUserComment> selectByProductId(Integer productId) {
 		// 상품 id 없으면 전체 조회
 		if (productId == 0) {
-			return jdbc.query(SELECT_ALL, rowMapper);
-		} else {
+			return jdbc.query(SELECT_COMMENT_ALL, rowMapper);
+		} 
+		else {
 			Map<String, Integer> params = new HashMap<>();
 			params.put("product_id", productId);
-			System.out.println("셀렉트 바이 프로덕트 아이디");
+			
 			return jdbc.query(SELECT_COMMENT_BY_PRODUCT_ID, params, rowMapper);
 		}
 	}
 
 	// get Total Count
-	public Integer selectTotalCount(Integer productId) {
+	public Integer selectTotalCount(Integer productId, Integer start) {
 
-		// 카테고리 아이디 null이면 전체 조회
+		// 상품 id 없으면 전체 조회
 		if (productId == 0) {
-			System.out.println("1");
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT, Collections.emptyMap(), Integer.class);
-		} else {
-			System.out.println("2");
+			Map<String, Integer> params = new HashMap<>();
+			params.put("start", start);
+
+//			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, Collections.emptyMap(), Integer.class);
+			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, params, Integer.class);
+		} 
+		else {
 			Map<String, Integer> params = new HashMap<>();
 			params.put("product_id", productId);
-
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT, params, Integer.class);
+			params.put("start", start);
+			
+			return jdbc.queryForObject(SELECT_TOTAL_COUNT_BY_PRODUCT_ID, params, Integer.class);
 		}
 	}
 
-	public Integer selectCommentCount(Integer productId) {
-		// 상품 id null이면 전체 조회
+	public Integer selectCommentCount(Integer productId, Integer start) {
+		// 상품 id 없으면 전체 조회
 		if (productId == 0) {
-			System.out.println("3");
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT, Collections.emptyMap(), Integer.class);
-		} else {
+			Map<String, Integer> params = new HashMap<>();
+			params.put("start", start);
+
+//			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, Collections.emptyMap(), Integer.class);
+			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, params, Integer.class);
+		} 
+		else {
 			System.out.println("4");
 			Map<String, Integer> params = new HashMap<>();
 			params.put("product_id", productId);
-			return jdbc.queryForObject(SELECT_COMMENT_COUNT, params, Integer.class);
+			params.put("start", start);
+			
+			return jdbc.queryForObject(SELECT_TOTAL_COUNT_BY_PRODUCT_ID, params, Integer.class);
 		}
 	}
 

@@ -33,13 +33,13 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public int getTotalCount(Integer productId) {
-		return commentDao.selectTotalCount(productId);
+	public int getTotalCount(Integer productId, Integer start) {
+		return commentDao.selectTotalCount(productId, start);
 	}
 
 	@Override
-	public int getCommentCount(Integer productId) {
-		return commentDao.selectCommentCount(productId);
+	public int getCommentCount(Integer productId, Integer start) {
+		return commentDao.selectCommentCount(productId, start);
 	}
 
 }
