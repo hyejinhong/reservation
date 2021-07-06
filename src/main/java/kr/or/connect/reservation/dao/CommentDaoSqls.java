@@ -40,7 +40,13 @@ public class CommentDaoSqls {
 	public static final String SELECT_COMMENT_ALL = 
 			"SELECT comment.id, comment.product_id, comment.reservation_info_id, "
 			+ "comment.score, user.email AS reservation_email, comment.comment, "
-			+ "comment.create_date, comment.modify_date "
+			+ "comment.create_date, comment.modify_date, "
+			
+			+ "image.id AS 'reservation_user_comment_images.id', image.reservation_info_id AS 'reservation_user_comment_image.reservation_info_id', " 
+			+ "image.reservation_user_comment_id AS 'reservation_user_comment_image.reservation_user_comment_id', "
+			+ "image.file_id AS 'reservation_user_comment_image.file_id' "
+			
+			
 			+ "FROM reservation_info info INNER JOIN reservation_user_comment comment ON info.id=comment.reservation_info_id "
 			+ "INNER JOIN user ON info.user_id=user.id "
 			+ "LEFT OUTER JOIN reservation_user_comment_image image ON info.id=image.reservation_info_id";
@@ -49,7 +55,12 @@ public class CommentDaoSqls {
 	public static final String SELECT_COMMENT_BY_PRODUCT_ID = 
 			"SELECT comment.id, comment.product_id, comment.reservation_info_id, "
 			+ "comment.score, user.email AS reservation_email, comment.comment, "
-			+ "comment.create_date, comment.modify_date "
+			+ "comment.create_date, comment.modify_date, "
+
+			+ "image.id AS 'reservation_user_comment_images.id', image.reservation_info_id AS 'reservation_user_comment_image.reservation_info_id', " 
+			+ "image.reservation_user_comment_id AS 'reservation_user_comment_image.reservation_user_comment_id', "
+			+ "image.file_id AS 'reservation_user_comment_image.file_id' "
+
 			+ "FROM reservation_info info INNER JOIN reservation_user_comment comment ON info.id=comment.reservation_info_id "
 			+ "INNER JOIN user ON info.user_id=user.id "
 			+ "LEFT OUTER JOIN reservation_user_comment_image image ON info.id=image.reservation_info_id "

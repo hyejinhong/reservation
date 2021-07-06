@@ -1,6 +1,8 @@
 package kr.or.connect.reservation.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ReservationUserComment {
 	private Integer id;
@@ -14,6 +16,23 @@ public class ReservationUserComment {
 
 	private String reservationEmail;
 	
+	private List<ReservationUserCommentImage> reservationUserCommentImages;
+	
+	public ReservationUserComment() {
+		this.reservationUserCommentImages = new ArrayList<>();
+	}
+	
+	public List<ReservationUserCommentImage> getReservationUserCommentImages() {
+		return reservationUserCommentImages;
+	}
+	public void setReservationUserCommentImages(List<ReservationUserCommentImage> reservationUserCommentImages) {
+		if(reservationUserCommentImages == null) {
+			this.reservationUserCommentImages = null;
+		}
+		else {
+			this.reservationUserCommentImages.addAll(reservationUserCommentImages);
+		}
+	}
 	public Integer getId() {
 		return id;
 	}

@@ -1,10 +1,12 @@
 package kr.or.connect.reservation.dto;
 
+
 public class ReservationUserCommentImage {
 	private Integer id;
 	private Integer reservationInfoId;
 	private Integer reservationUserCommentId;
 	private Integer fileId;
+	
 	public Integer getId() {
 		return id;
 	}
