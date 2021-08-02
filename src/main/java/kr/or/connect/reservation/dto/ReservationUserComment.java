@@ -8,14 +8,11 @@ public class ReservationUserComment {
 	private Integer id;
 	private Integer productId;
 	private Integer reservationInfoId;
-//	private Integer userId;
 	private Double score;
 	private String comment;
 	private Date createDate;
 	private Date modifyDate;
-
 	private String reservationEmail;
-	
 	private List<ReservationUserCommentImage> reservationUserCommentImages;
 	
 	public ReservationUserComment() {

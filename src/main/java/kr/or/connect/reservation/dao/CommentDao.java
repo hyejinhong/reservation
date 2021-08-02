@@ -16,13 +16,15 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.dto.ReservationUserComment;
+import kr.or.connect.reservation.dto.ReservationUserCommentImage;
 
 @Repository
 public class CommentDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
 	private RowMapper<ReservationUserComment> rowMapper = BeanPropertyRowMapper.newInstance(ReservationUserComment.class);
-
+	private RowMapper<ReservationUserCommentImage> imageRowMapper = BeanPropertyRowMapper.newInstance(ReservationUserCommentImage.class);
+	
 	public CommentDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 		this.insertAction = new SimpleJdbcInsert(dataSource).withTableName("reservation_user_comment")
@@ -33,19 +35,51 @@ public class CommentDao {
 	public List<ReservationUserComment> selectByProductId(Integer productId) {
 		// 상품 id 없으면 전체 조회
 		if (productId == 0) {
-			return jdbc.query(SELECT_COMMENT_ALL, rowMapper);
+			System.out.println("전체 조회");
+			
+			// 먼저 댓글 가져오기
+			List<ReservationUserComment> comments = jdbc.query(SELECT_COMMENT_ALL, rowMapper);
+			
+			// 댓글 하나씩 이미지 리스트를 가져와보자..
+			for(int i=0; i<comments.size(); i++) {
+				ReservationUserComment comment = comments.get(i);
+				
+				Map<String, Integer> params = new HashMap<>();
+				params.put("comment_id", comment.getId());
+				List<ReservationUserCommentImage> images = jdbc.query(SELECT_COMMENT_IMAGE, params, imageRowMapper);
+				
+				comment.setReservationUserCommentImages(images);
+			}
+			
+			// 끝나면 리턴
+			return comments;
 		} 
 		else {
+			
+			// 먼저 댓글 가져오기
 			Map<String, Integer> params = new HashMap<>();
 			params.put("product_id", productId);
 			
-			return jdbc.query(SELECT_COMMENT_BY_PRODUCT_ID, params, rowMapper);
+			List<ReservationUserComment> comments = jdbc.query(SELECT_COMMENT_BY_PRODUCT_ID, params, rowMapper);
+			
+			// 댓글 하나씩 이미지 리스트를 가져와보자..
+			for(int i=0; i<comments.size(); i++) {
+				ReservationUserComment comment = comments.get(i);
+				
+				params.put("comment_id", comment.getId());
+				List<ReservationUserCommentImage> images = jdbc.query(SELECT_COMMENT_IMAGE, params, imageRowMapper);
+				
+				comment.setReservationUserCommentImages(images);
+
+			}
+			
+			// 끝나면 리턴
+			return comments;
 		}
 	}
 
 	// get Total Count
 	public Integer selectTotalCount(Integer productId, Integer start) {
-
 		// 상품 id 없으면 전체 조회
 		if (productId == 0) {
 			Map<String, Integer> params = new HashMap<>();
@@ -73,7 +107,6 @@ public class CommentDao {
 			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, params, Integer.class);
 		} 
 		else {
-			System.out.println("4");
 			Map<String, Integer> params = new HashMap<>();
 			params.put("product_id", productId);
 			params.put("start", start);
