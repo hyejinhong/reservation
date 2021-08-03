@@ -65,6 +65,13 @@ public class ReservationApiController {
 		return map;
 	}
 
+	@GetMapping(path="/displayinfos/{displayId}")
+	public String getDisplayInfo() {
+		System.out.println("ㅎㅇ");
+		return "ㅎㅇ";
+	}
+	
+	
 	@GetMapping(path="/promotions")
 	public Map<String, Object> getPromotions() {
 		// 목록 가져오기
@@ -98,4 +105,5 @@ public class ReservationApiController {
 		
 		return map;
 	}
+
 }

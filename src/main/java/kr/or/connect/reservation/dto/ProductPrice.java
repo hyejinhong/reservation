@@ -10,6 +10,7 @@ public class ProductPrice {
 	private Double discountRate;
 	private Date createDate;
 	private Date modifyDate;
+	
 	public Integer getId() {
 		return id;
 	}
