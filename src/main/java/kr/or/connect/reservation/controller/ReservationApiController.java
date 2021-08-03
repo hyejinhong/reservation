@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservation.dto.Category;
 import kr.or.connect.reservation.dto.DisplayInfo;
+import kr.or.connect.reservation.dto.Product;
 import kr.or.connect.reservation.dto.Promotion;
 import kr.or.connect.reservation.dto.ReservationUserComment;
 import kr.or.connect.reservation.service.CategoryService;
 import kr.or.connect.reservation.service.CommentService;
 import kr.or.connect.reservation.service.DisplayInfoService;
+import kr.or.connect.reservation.service.ProductService;
 import kr.or.connect.reservation.service.PromotionService;
 
 @RestController
@@ -33,6 +35,9 @@ public class ReservationApiController {
 	
 	@Autowired
 	CommentService commentService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@GetMapping(path="/categories")
 	public Map<String, Object> getCategories() {
@@ -65,11 +70,12 @@ public class ReservationApiController {
 		return map;
 	}
 
-	@GetMapping(path="/displayinfos/{displayId}")
-	public String getDisplayInfo() {
-		System.out.println("ㅎㅇ");
-		return "ㅎㅇ";
-	}
+//	@GetMapping(path="/displayinfos/{displayId}")
+//	public Map<String, Object> getDisplayInfo() {
+//		// 반환할 객체 만들기
+//		Map<String, Object> map = new HashMap<>();
+//		
+//	}
 	
 	
 	@GetMapping(path="/promotions")
@@ -106,4 +112,18 @@ public class ReservationApiController {
 		return map;
 	}
 
+	@GetMapping(path="/products")
+	public Map<String, Object> getProducts(
+			@RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId,
+			@RequestParam(name="start", required=false, defaultValue="0") int start) {
+		
+		// 목록 가져오기
+		List<Product> products = productService.getProducts();
+		
+		// 반환할 객체
+		Map<String, Object> map = new HashMap<>();
+		map.put("products", products);
+		
+		return map;
+	}
 }

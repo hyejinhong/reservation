@@ -6,11 +6,11 @@ public class Product {
 	private Integer id;
 	private Integer categoryId;
 	private Integer displayInfoId;
-	private String desciption;
+	private String description;
 	private String name;
 	private String content;
 	private String event;
-	private Date openingHours;
+	private String openingHours;
 	private String placeName;
 	private String placeLot;
 	private String placeStreet;
@@ -33,10 +33,10 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getOpeningHours() {
+	public String getOpeningHours() {
 		return openingHours;
 	}
-	public void setOpeningHours(Date openingHours) {
+	public void setOpeningHours(String openingHours) {
 		this.openingHours = openingHours;
 	}
 	public String getPlaceName() {
@@ -93,11 +93,12 @@ public class Product {
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
-	public String getDesciption() {
-		return desciption;
+
+	public String getDescription() {
+		return description;
 	}
-	public void setDesciption(String desciption) {
-		this.desciption = desciption;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getContent() {
 		return content;
@@ -122,11 +123,6 @@ public class Product {
 	}
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
-	}
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", categoryId=" + categoryId + ", desciption=" + desciption + ", content="
-				+ content + ", event=" + event + ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
 	}
 	
 	
