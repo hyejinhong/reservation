@@ -16,14 +16,13 @@ public class ProductServiceImpl implements ProductService {
 	ProductDao productDao;
 	
 	@Override
-	public List<Product> getProducts() {
-		return productDao.getAllProducts();
+	public List<Product> getProducts(Integer categoryId) {
+		return productDao.getProducts(categoryId);
 	}
 
 	@Override
-	public Integer getTotalCount() {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer getTotalCount(Integer categoryId) {
+		return productDao.getTotalCount(categoryId);
 	}
 
 	@Override
