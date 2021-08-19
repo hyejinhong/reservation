@@ -40,7 +40,7 @@ public class ProductDao {
 			Map<String, Integer> params = new HashMap<>();
 			params.put("category_id", categoryId);
 			
-			return jdbc.query(SELECT_PRODUCT_BY_CATEGORY_ID, params, rowMapper);
+			return jdbc.query(SELECT_BY_CATEGORY_ID, params, rowMapper);
 		}
 	}
 	
@@ -56,5 +56,12 @@ public class ProductDao {
 			
 			return jdbc.queryForObject(SELECT_TOTAL_COUNT_BY_CATEGORY_ID, params, Integer.class);
 		}
+	}
+
+	public List<Product> findByDisplayInfoId(Integer displayInfoId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("display_info_id", displayInfoId);
+		
+		return jdbc.query(SELECT_BY_DISPLAY_INFO_ID, params, rowMapper);
 	}
 }

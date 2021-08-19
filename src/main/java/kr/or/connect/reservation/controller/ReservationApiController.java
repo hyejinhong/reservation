@@ -77,7 +77,7 @@ public class ReservationApiController {
 	@GetMapping(path="/displayinfos/{displayId}")
 	public Map<String, Object> getDisplayInfo(@PathVariable("displayId") int displayInfoId) {
 		// 목록 가져오기
-		List<Product> products = productService.listProduct(displayInfoId);
+		List<Product> products = productService.listProductByDisplayInfoId(displayInfoId);
 //		List<ProductImage> productImages = productImageService.getProductImages();
 //		List<DisplayInfoImage> displayInfoImages = displayInfoImageService.getDisplayInfoImages();
 		int avgScore = displayInfoService.getAvgScore(displayInfoId);

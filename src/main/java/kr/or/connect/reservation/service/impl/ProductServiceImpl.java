@@ -19,6 +19,11 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> listProduct(Integer categoryId) {
 		return productDao.findByCategoryId(categoryId);
 	}
+	
+	@Override
+	public List<Product> listProductByDisplayInfoId(Integer displayInfoId) {
+		return productDao.findByDisplayInfoId(displayInfoId);
+	}
 
 	@Override
 	public Integer getTotalCount(Integer categoryId) {
