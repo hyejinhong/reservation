@@ -29,7 +29,7 @@ public class CategoryDao {
 	}
 	
 	// 모든 카테고리 가져오기
-	public List<Category> selectAll() {
+	public List<Category> getAll() {
 		return jdbc.query(SELECT_ALL, rowMapper);
 	}
 

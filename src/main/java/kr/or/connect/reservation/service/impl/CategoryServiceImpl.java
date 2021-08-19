@@ -18,7 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
 	// 카테고리 목록 가져오기
 	@Override
 	public List<Category> getCategories() {
-		List<Category> categories = categoryDao.selectAll();
+		List<Category> categories = categoryDao.getAll();
 		return categories;
 	}
 

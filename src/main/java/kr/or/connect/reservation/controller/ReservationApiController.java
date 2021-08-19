@@ -6,13 +6,17 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.connect.reservation.dto.Category;
 import kr.or.connect.reservation.dto.DisplayInfo;
+import kr.or.connect.reservation.dto.DisplayInfoImage;
 import kr.or.connect.reservation.dto.Product;
+import kr.or.connect.reservation.dto.ProductImage;
+import kr.or.connect.reservation.dto.ProductPrice;
 import kr.or.connect.reservation.dto.Promotion;
 import kr.or.connect.reservation.dto.ReservationUserComment;
 import kr.or.connect.reservation.service.CategoryService;
@@ -59,7 +63,7 @@ public class ReservationApiController {
 			@RequestParam(name="start", required=false, defaultValue="0") int start) {
 		
 		// 목록 가져오기
-		List<DisplayInfo> displayInfos = displayInfoService.getDisplayInfos(categoryId);
+		List<DisplayInfo> displayInfos = displayInfoService.listDisplayInfo(categoryId);
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();
@@ -70,12 +74,22 @@ public class ReservationApiController {
 		return map;
 	}
 
-//	@GetMapping(path="/displayinfos/{displayId}")
-//	public Map<String, Object> getDisplayInfo() {
-//		// 반환할 객체 만들기
-//		Map<String, Object> map = new HashMap<>();
-//		
-//	}
+	@GetMapping(path="/displayinfos/{displayId}")
+	public Map<String, Object> getDisplayInfo(@PathVariable("displayId") int displayInfoId) {
+		// 목록 가져오기
+		List<Product> products = productService.listProduct(displayInfoId);
+//		List<ProductImage> productImages = productImageService.getProductImages();
+//		List<DisplayInfoImage> displayInfoImages = displayInfoImageService.getDisplayInfoImages();
+		int avgScore = displayInfoService.getAvgScore(displayInfoId);
+//		List<ProductPrice> productPrices = productPriceService.getProductPrices();
+		
+		// 반환할 객체 만들기
+		Map<String, Object> map = new HashMap<>();
+		map.put("products", products);
+		map.put("avgScore", avgScore);
+
+		return map;
+	}
 	
 	
 	@GetMapping(path="/promotions")
@@ -118,7 +132,7 @@ public class ReservationApiController {
 			@RequestParam(name="start", required=false, defaultValue="0") int start) {
 		
 		// 목록 가져오기
-		List<Product> products = productService.getProducts(categoryId);
+		List<Product> products = productService.listProduct(categoryId);
 		int totalCount = productService.getTotalCount(categoryId);
 		
 		// 반환할 객체

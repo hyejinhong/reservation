@@ -17,7 +17,7 @@ public class CommentServiceImpl implements CommentService {
 	
 	@Override
 	public List<ReservationUserComment> getComments(Integer productId) {
-		return commentDao.selectByProductId(productId);
+		return commentDao.findByProductId(productId);
 	}
 
 	@Override
@@ -34,12 +34,12 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public int getTotalCount(Integer productId, Integer start) {
-		return commentDao.selectTotalCount(productId, start);
+		return commentDao.getTotalCount(productId, start);
 	}
 
 	@Override
 	public int getCommentCount(Integer productId, Integer start) {
-		return commentDao.selectCommentCount(productId, start);
+		return commentDao.getCommentCount(productId, start);
 	}
 
 }

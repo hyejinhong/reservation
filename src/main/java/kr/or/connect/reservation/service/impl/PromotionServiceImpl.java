@@ -17,12 +17,12 @@ public class PromotionServiceImpl implements PromotionService {
 	
 	@Override
 	public List<Promotion> getPromotions() {
-		return promotionDao.selectAll();
+		return promotionDao.getAll();
 	}
 
 	@Override
 	public Integer getSize() {
-		return promotionDao.selectSize();
+		return promotionDao.getSize();
 	}
 
 }

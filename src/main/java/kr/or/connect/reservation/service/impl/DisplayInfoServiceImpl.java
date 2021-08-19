@@ -17,13 +17,15 @@ public class DisplayInfoServiceImpl implements DisplayInfoService {
 	DisplayInfoDao displayInfoDao;
 	
 	// 전시 정보 조회
-	@Override
-	public List<DisplayInfo> getDisplayInfos(Integer categoryId) {
-		return displayInfoDao.selectByCategoryId(categoryId);
+//	public List<DisplayInfo> listDisplayInfo(Integer categoryId) {
+//		return displayInfoDao.selectByCategoryId(categoryId);
+//	}
+	public List<DisplayInfo> listDisplayInfo(Integer categoryId) {
+		return displayInfoDao.findByCategoryId(categoryId);
 	}
-
+	
 	@Override
-	public int deleteDisplayInfo(Integer id) {
+	public int removeDisplayInfo(Integer id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -37,13 +39,17 @@ public class DisplayInfoServiceImpl implements DisplayInfoService {
 	// 전체 전시 개수 반환
 	@Override
 	public int getTotalCount(Integer categoryId) {
-		return displayInfoDao.selectTotalCount(categoryId);
+		return displayInfoDao.getTotalCount(categoryId);
 	}
 
 	@Override
 	public int getProductCount(Integer categoryId) {
-		// TODO Auto-generated method stub
-		return displayInfoDao.selectProductCount(categoryId);
+		return displayInfoDao.getProductCount(categoryId);
+	}
+
+	@Override
+	public int getAvgScore(int displayInfoId) {
+		return displayInfoDao.getAvgScore(displayInfoId);
 	}
 
 }

@@ -31,7 +31,7 @@ public class ProductDao {
 	}
 	
 	// 카테고리 ID별 상품 가져오기
-	public List<Product> getProducts(Integer categoryId) {
+	public List<Product> findByCategoryId(Integer categoryId) {
 		// 카테고리 아이디 0이면 전체 조회
 		if(categoryId == 0) {
 			return jdbc.query(SELECT_ALL_PRODUCT, rowMapper);

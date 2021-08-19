@@ -32,12 +32,11 @@ public class CommentDao {
 	}
 
 	// product_id 별 조회 결과 가져오기
-	public List<ReservationUserComment> selectByProductId(Integer productId) {
+	public List<ReservationUserComment> findByProductId(Integer productId) {
 		// 상품 id 없으면 전체 조회
 		if (productId == 0) {
-			System.out.println("전체 조회");
 			
-			// 먼저 댓글 가져오기
+			// 댓글 가져오기
 			List<ReservationUserComment> comments = jdbc.query(SELECT_COMMENT_ALL, rowMapper);
 			
 			// 댓글 하나씩 이미지 리스트를 가져와보자..
@@ -79,7 +78,7 @@ public class CommentDao {
 	}
 
 	// get Total Count
-	public Integer selectTotalCount(Integer productId, Integer start) {
+	public Integer getTotalCount(Integer productId, Integer start) {
 		// 상품 id 없으면 전체 조회
 		if (productId == 0) {
 			Map<String, Integer> params = new HashMap<>();
@@ -97,7 +96,7 @@ public class CommentDao {
 		}
 	}
 
-	public Integer selectCommentCount(Integer productId, Integer start) {
+	public Integer getCommentCount(Integer productId, Integer start) {
 		// 상품 id 없으면 전체 조회
 		if (productId == 0) {
 			Map<String, Integer> params = new HashMap<>();

@@ -30,12 +30,12 @@ public class PromotionDao {
 	}
 	
 	// 모든 카테고리 가져오기
-	public List<Promotion> selectAll() {
+	public List<Promotion> getAll() {
 		return jdbc.query(SELECT_ALL, rowMapper);
 	}
 
 	// 개수 반환
-	public Integer selectSize() {
+	public Integer getSize() {
 		return jdbc.queryForObject(SELECT_SIZE, Collections.emptyMap(), Integer.class);
 	}
 }

@@ -2,6 +2,18 @@ package kr.or.connect.reservation.dao;
 
 
 public class DisplayInfoDaoSqls {
+	
+	public static final String SELECT_ONE = 
+			"SELECT display_info.id, category.id AS category_id, display_info.id AS display_info_id, category.name AS category_name, "
+			+ "product.description AS product_description, product.content AS product_content, product.event AS product_event, "
+			+ "opening_hours, place_name, place_lot, place_street, tel, homepage, email, display_info.create_date, display_info.modify_date, "
+			+ "file_info.id AS file_id "
+			+ "FROM display_info LEFT JOIN product ON display_info.product_id = product.id "
+			+ "LEFT JOIN category ON product.category_id = category.id "
+			+ "LEFT JOIN product_image ON product_image.product_id = product.id "
+			+ "LEFT JOIN file_info ON product_image.file_id = file_info.id "
+			+ "WHERE display_info.id=:display_info_id";
+
 	public static final String SELECT_ALL = 
 			"SELECT display_info.id, category.id AS category_id, display_info.id AS display_info_id, category.name AS category_name, "
 			+ "product.description AS product_description, product.content AS product_content, product.event AS product_event, "
@@ -51,5 +63,9 @@ public class DisplayInfoDaoSqls {
 //			+ "WHERE category_id=:category_id "
 			+ "GROUP BY product.id) a";
 			
+	public static final String SELECT_AVG_SCORE =
+			"SELECT AVG(comment.score) AS avgScore "
+			+ "FROM reservation_user_comment comment JOIN reservation_info info ON comment.reservation_info_id=info.id "
+			+ "WHERE info.id=:display_info_id";
 
 }

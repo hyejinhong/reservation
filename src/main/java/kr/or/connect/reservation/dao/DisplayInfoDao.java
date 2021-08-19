@@ -30,13 +30,19 @@ public class DisplayInfoDao {
 				.usingGeneratedKeyColumns("id");
 	}
 
+	public DisplayInfo get(Integer displayInfoId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put(SELECT_ONE, displayInfoId);
+		
+		return jdbc.queryForObject(SELECT_ONE, params, rowMapper);
+	}
 	// 모든 전시 정보 가져오기
 //	public List<DisplayInfo> selectAll() {
 //		return jdbc.query(SELECT_ALL, rowMapper);
 //	}
 
 	// category_id 별 조회 결과 가져오기
-	public List<DisplayInfo> selectByCategoryId(Integer categoryId) {
+	public List<DisplayInfo> findByCategoryId(Integer categoryId) {
 
 		// 카테고리 아이디 0이면 전체 조회
 		if (categoryId == 0) {
@@ -51,7 +57,7 @@ public class DisplayInfoDao {
 	}
 
 	// get Total Count
-	public Integer selectTotalCount(Integer categoryId) {
+	public Integer getTotalCount(Integer categoryId) {
 
 		// 카테고리 아이디 0이면 전체 조회
 		if (categoryId == 0) {
@@ -65,7 +71,7 @@ public class DisplayInfoDao {
 	}
 
 	// get 카테고리별 Count
-	public Integer selectProductCount(Integer categoryId) {
+	public Integer getProductCount(Integer categoryId) {
 		// 카테고리 아이디 0이면 전체 조회
 		if (categoryId == 0) {
 			return jdbc.queryForObject(SELECT_PRODUCT_COUNT_ALL_CATEGORY, Collections.emptyMap(), Integer.class);
@@ -75,5 +81,12 @@ public class DisplayInfoDao {
 			return jdbc.queryForObject(SELECT_PRODUCT_COUNT, params, Integer.class);
 		}
 	}
+
+	public int getAvgScore(int displayInfoId) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("display_info_id", displayInfoId);
+		return jdbc.queryForObject(SELECT_AVG_SCORE, params, Integer.class);
+	}
+
 
 }
