@@ -22,6 +22,7 @@ import kr.or.connect.reservation.dto.ReservationUserComment;
 import kr.or.connect.reservation.service.CategoryService;
 import kr.or.connect.reservation.service.CommentService;
 import kr.or.connect.reservation.service.DisplayInfoService;
+import kr.or.connect.reservation.service.ProductImageService;
 import kr.or.connect.reservation.service.ProductService;
 import kr.or.connect.reservation.service.PromotionService;
 
@@ -42,6 +43,9 @@ public class ReservationApiController {
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	ProductImageService productImageService;
 	
 	@GetMapping(path="/categories")
 	public Map<String, Object> getCategories() {
@@ -77,15 +81,16 @@ public class ReservationApiController {
 	@GetMapping(path="/displayinfos/{displayId}")
 	public Map<String, Object> getDisplayInfo(@PathVariable("displayId") int displayInfoId) {
 		// 목록 가져오기
-		List<Product> products = productService.listProductByDisplayInfoId(displayInfoId);
-//		List<ProductImage> productImages = productImageService.getProductImages();
+		Product product = productService.getByDisplayInfoId(displayInfoId);
+		List<ProductImage> productImages = productImageService.getProductImages(product.getId());
 //		List<DisplayInfoImage> displayInfoImages = displayInfoImageService.getDisplayInfoImages();
 		int avgScore = displayInfoService.getAvgScore(displayInfoId);
 //		List<ProductPrice> productPrices = productPriceService.getProductPrices();
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();
-		map.put("products", products);
+		map.put("product", product);
+		map.put("product_images", productImages);
 		map.put("avgScore", avgScore);
 
 		return map;

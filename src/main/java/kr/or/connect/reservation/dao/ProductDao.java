@@ -58,10 +58,10 @@ public class ProductDao {
 		}
 	}
 
-	public List<Product> findByDisplayInfoId(Integer displayInfoId) {
+	public Product findByDisplayInfoId(Integer displayInfoId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("display_info_id", displayInfoId);
 		
-		return jdbc.query(SELECT_BY_DISPLAY_INFO_ID, params, rowMapper);
+		return jdbc.queryForObject(SELECT_BY_DISPLAY_INFO_ID, params, rowMapper);
 	}
 }

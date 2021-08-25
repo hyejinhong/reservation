@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<Product> listProductByDisplayInfoId(Integer displayInfoId) {
+	public Product getByDisplayInfoId(Integer displayInfoId) {
 		return productDao.findByDisplayInfoId(displayInfoId);
 	}
 

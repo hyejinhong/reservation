@@ -35,7 +35,8 @@ public class ProductDaoSqls {
 			+ "FROM product JOIN display_info ON product.id=display_info.product_id "
 			+ "JOIN category ON product.category_id=category.id "
 			+ "JOIN product_image ON product.id=product_image.product_id "
-			+ "WHERE display_info.id=:display_info_id";
+			+ "WHERE display_info.id=:display_info_id "
+			+ "LIMIT 1";
 
 	
 	// total count - 모든 카테고리 해당 카테고리의 전시 상품 수
