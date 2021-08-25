@@ -24,6 +24,7 @@ import kr.or.connect.reservation.service.CommentService;
 import kr.or.connect.reservation.service.DisplayInfoImageService;
 import kr.or.connect.reservation.service.DisplayInfoService;
 import kr.or.connect.reservation.service.ProductImageService;
+import kr.or.connect.reservation.service.ProductPriceService;
 import kr.or.connect.reservation.service.ProductService;
 import kr.or.connect.reservation.service.PromotionService;
 
@@ -50,6 +51,9 @@ public class ReservationApiController {
 	
 	@Autowired
 	DisplayInfoImageService displayInfoImageService;
+	
+	@Autowired
+	ProductPriceService productPriceService;
 	
 	@GetMapping(path="/categories")
 	public Map<String, Object> getCategories() {
@@ -89,13 +93,14 @@ public class ReservationApiController {
 		List<ProductImage> productImages = productImageService.getProductImages(product.getId());
 		List<DisplayInfoImage> displayInfoImages = displayInfoImageService.getDisplayInfoImages(displayInfoId);
 		int avgScore = displayInfoService.getAvgScore(displayInfoId);
-//		List<ProductPrice> productPrices = productPriceService.getProductPrices();
+		List<ProductPrice> productPrices = productPriceService.getProductPrice(product.getId());
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();
 		map.put("product", product);
 		map.put("product_images", productImages);
 		map.put("display_info_images", displayInfoImages);
+		map.put("product_prices", productPrices);
 		map.put("avgScore", avgScore);
 
 		return map;
