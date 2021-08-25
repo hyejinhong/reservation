@@ -4,11 +4,15 @@ import java.util.Date;
 
 public class DisplayInfoImage {
 	private Integer id;
-	private Integer diaplayInfoId;
+	private Integer displayInfoId;
 	private Integer fileId;
 	private String fileName;
 	private String saveFileName;
 	private String contentType;
+	private Integer deleteFlag;
+	private Date createDate;
+	private Date modifyDate;
+
 	
 	public String getFileName() {
 		return fileName;
@@ -46,31 +50,23 @@ public class DisplayInfoImage {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	private Integer deleteFlag;
-	private Date createDate;
-	private Date modifyDate;
-	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getDiaplayInfoId() {
-		return diaplayInfoId;
+	public Integer getDisplayInfoId() {
+		return displayInfoId;
 	}
-	public void setDiaplayInfoId(Integer diaplayInfoId) {
-		this.diaplayInfoId = diaplayInfoId;
+	public void setDisplayInfoId(Integer diaplayInfoId) {
+		this.displayInfoId = diaplayInfoId;
 	}
 	public Integer getFileId() {
 		return fileId;
 	}
 	public void setFileId(Integer fileId) {
 		this.fileId = fileId;
-	}
-	@Override
-	public String toString() {
-		return "DisplayInfoImage [id=" + id + ", diaplayInfoId=" + diaplayInfoId + ", fileId=" + fileId + "]";
 	}
 	
 	

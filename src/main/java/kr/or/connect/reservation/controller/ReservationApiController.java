@@ -21,6 +21,7 @@ import kr.or.connect.reservation.dto.Promotion;
 import kr.or.connect.reservation.dto.ReservationUserComment;
 import kr.or.connect.reservation.service.CategoryService;
 import kr.or.connect.reservation.service.CommentService;
+import kr.or.connect.reservation.service.DisplayInfoImageService;
 import kr.or.connect.reservation.service.DisplayInfoService;
 import kr.or.connect.reservation.service.ProductImageService;
 import kr.or.connect.reservation.service.ProductService;
@@ -46,6 +47,9 @@ public class ReservationApiController {
 	
 	@Autowired
 	ProductImageService productImageService;
+	
+	@Autowired
+	DisplayInfoImageService displayInfoImageService;
 	
 	@GetMapping(path="/categories")
 	public Map<String, Object> getCategories() {
@@ -83,7 +87,7 @@ public class ReservationApiController {
 		// 목록 가져오기
 		Product product = productService.getByDisplayInfoId(displayInfoId);
 		List<ProductImage> productImages = productImageService.getProductImages(product.getId());
-//		List<DisplayInfoImage> displayInfoImages = displayInfoImageService.getDisplayInfoImages();
+		List<DisplayInfoImage> displayInfoImages = displayInfoImageService.getDisplayInfoImages(displayInfoId);
 		int avgScore = displayInfoService.getAvgScore(displayInfoId);
 //		List<ProductPrice> productPrices = productPriceService.getProductPrices();
 		
@@ -91,6 +95,7 @@ public class ReservationApiController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("product", product);
 		map.put("product_images", productImages);
+		map.put("display_info_images", displayInfoImages);
 		map.put("avgScore", avgScore);
 
 		return map;
