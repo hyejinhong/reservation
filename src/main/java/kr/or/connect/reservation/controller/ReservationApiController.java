@@ -72,15 +72,15 @@ public class ReservationApiController {
 	@GetMapping(path="/displayinfos")
 	public Map<String, Object> getDisplayInfos(
 			@RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId,
-			@RequestParam(name="start", required=false, defaultValue="0") int start) {
+			@RequestParam(name="start", required=false, defaultValue="-1") int start) {
 		
 		// 목록 가져오기
-		List<DisplayInfo> displayInfos = displayInfoService.listDisplayInfo(categoryId);
+		List<DisplayInfo> displayInfos = displayInfoService.listDisplayInfo(categoryId, start);
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();
 		map.put("totalCount", displayInfoService.getTotalCount(categoryId));
-		map.put("productCount", displayInfoService.getProductCount(categoryId));
+		map.put("productCount", displayInfoService.getProductCount(categoryId, start));
 		map.put("products", displayInfos);
 		
 		return map;

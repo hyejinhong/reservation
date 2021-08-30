@@ -17,11 +17,8 @@ public class DisplayInfoServiceImpl implements DisplayInfoService {
 	DisplayInfoDao displayInfoDao;
 	
 	// 전시 정보 조회
-//	public List<DisplayInfo> listDisplayInfo(Integer categoryId) {
-//		return displayInfoDao.selectByCategoryId(categoryId);
-//	}
-	public List<DisplayInfo> listDisplayInfo(Integer categoryId) {
-		return displayInfoDao.findByCategoryId(categoryId);
+	public List<DisplayInfo> listDisplayInfo(Integer categoryId, Integer start) {
+		return displayInfoDao.findByCategoryId(categoryId, start);
 	}
 	
 	@Override
@@ -43,8 +40,8 @@ public class DisplayInfoServiceImpl implements DisplayInfoService {
 	}
 
 	@Override
-	public int getProductCount(Integer categoryId) {
-		return displayInfoDao.getProductCount(categoryId);
+	public int getProductCount(Integer categoryId, Integer start) {
+		return displayInfoDao.getProductCount(categoryId, start);
 	}
 
 	@Override

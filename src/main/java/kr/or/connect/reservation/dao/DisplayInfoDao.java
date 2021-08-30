@@ -36,33 +36,50 @@ public class DisplayInfoDao {
 		
 		return jdbc.queryForObject(SELECT_ONE, params, rowMapper);
 	}
-	// 모든 전시 정보 가져오기
-//	public List<DisplayInfo> selectAll() {
-//		return jdbc.query(SELECT_ALL, rowMapper);
-//	}
 
 	// category_id 별 조회 결과 가져오기
-	public List<DisplayInfo> findByCategoryId(Integer categoryId) {
+	public List<DisplayInfo> findByCategoryId(Integer categoryId, Integer start) {
 
-		// 카테고리 아이디 0이면 전체 조회
-		if (categoryId == 0) {
+		// 카테고리 N, 시작 위치 N
+		if (categoryId == 0 && start == -1) {
 			return jdbc.query(SELECT_ALL, rowMapper);
-		} else {
+		}
+		
+		// 카테고리 N, 시작 위치 Y
+		else if(categoryId == 0 && start != -1) {
+			Map<String, Integer> params = new HashMap<>();
+			params.put("start", start);
+			
+			return jdbc.query(SELECT_ALL_CATEGORY_AND_START, params, rowMapper);
+		}
+		
+		// 카테고리 Y, 시작 위치 N
+		else if(categoryId != 0 && start == -1) {
 			Map<String, Integer> params = new HashMap<>();
 			params.put("category_id", categoryId);
 
-//			return jdbc.query(SELECT_BY_CATEGORY_ID, params, rowMapper);
 			return jdbc.query(SELECT_BY_CATEGORY_ID, params, rowMapper);
+		}
+		
+		// 카테고리 Y, 시작 위치 Y
+		
+		else {
+			Map<String, Integer> params = new HashMap<>();
+			params.put("category_id", categoryId);
+			params.put("start", start);
+			
+			return jdbc.query(SELECT_BY_CATEGORY_ID_AND_START, params, rowMapper);
 		}
 	}
 
-	// get Total Count
+	// 해당 카테고리의 전시 상품 수
 	public Integer getTotalCount(Integer categoryId) {
 
-		// 카테고리 아이디 0이면 전체 조회
+		// 전체 카테고리 조회
 		if (categoryId == 0) {
 			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_CATEGORY, Collections.emptyMap(), Integer.class);
-		} else {
+		}
+		else {
 			Map<String, Integer> params = new HashMap<>();
 			params.put("category_id", categoryId);
 
@@ -70,16 +87,41 @@ public class DisplayInfoDao {
 		}
 	}
 
-	// get 카테고리별 Count
-	public Integer getProductCount(Integer categoryId) {
-		// 카테고리 아이디 0이면 전체 조회
-		if (categoryId == 0) {
+	// 읽어온 전시 상품 수
+	public Integer getProductCount(Integer categoryId, Integer start) {
+		
+		// 카테고리 N, 시작 위치 N
+		if (categoryId == 0 && start == -1) {
 			return jdbc.queryForObject(SELECT_PRODUCT_COUNT_ALL_CATEGORY, Collections.emptyMap(), Integer.class);
-		} else {
+		}
+		
+		// 카테고리 N, 시작 위치 Y
+		else if(categoryId == 0 && start != -1) {
+			Map<String, Integer> params = new HashMap<>();
+			params.put("start", start);
+			
+			return jdbc.queryForObject(SELECT_PRODUCT_COUNT_ALL_CATEGORY_AND_START, params, Integer.class);
+		}
+		
+		// 카테고리 Y, 시작 위치 N
+		else if(categoryId != 0 && start == -1) {
 			Map<String, Integer> params = new HashMap<>();
 			params.put("category_id", categoryId);
-			return jdbc.queryForObject(SELECT_PRODUCT_COUNT, params, Integer.class);
+			
+			return jdbc.queryForObject(SELECT_PRODUCT_COUNT_BY_CATEGORY_ID, params, Integer.class);
 		}
+		
+		// 카테고리 Y, 시작 위치 Y
+		else {
+			Map<String, Integer> params = new HashMap<>();
+			params.put("category_id", categoryId);
+			params.put("start", start);
+			
+			return jdbc.queryForObject(SELECT_PRODUCT_COUNT_BY_CATEGORY_ID_AND_START, params, Integer.class);
+		}
+		
+		
+		
 	}
 
 	public int getAvgScore(int displayInfoId) {
