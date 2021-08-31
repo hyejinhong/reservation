@@ -32,85 +32,66 @@ public class CommentDao {
 	}
 
 	// product_id 별 조회 결과 가져오기
-	public List<ReservationUserComment> findByProductId(Integer productId) {
-		// 상품 id 없으면 전체 조회
-		if (productId == 0) {
-			
-			// 댓글 가져오기
-			List<ReservationUserComment> comments = jdbc.query(SELECT_COMMENT_ALL, rowMapper);
-			
-			// 댓글 하나씩 이미지 리스트를 가져와보자..
-			for(int i=0; i<comments.size(); i++) {
-				ReservationUserComment comment = comments.get(i);
-				
-				Map<String, Integer> params = new HashMap<>();
-				params.put("comment_id", comment.getId());
-				List<ReservationUserCommentImage> images = jdbc.query(SELECT_COMMENT_IMAGE, params, imageRowMapper);
-				
-				comment.setReservationUserCommentImages(images);
-			}
-			
-			// 끝나면 리턴
-			return comments;
-		} 
-		else {
-			
-			// 먼저 댓글 가져오기
-			Map<String, Integer> params = new HashMap<>();
-			params.put("product_id", productId);
-			
-			List<ReservationUserComment> comments = jdbc.query(SELECT_COMMENT_BY_PRODUCT_ID, params, rowMapper);
-			
-			// 댓글 하나씩 이미지 리스트를 가져와보자..
-			for(int i=0; i<comments.size(); i++) {
-				ReservationUserComment comment = comments.get(i);
-				
-				params.put("comment_id", comment.getId());
-				List<ReservationUserCommentImage> images = jdbc.query(SELECT_COMMENT_IMAGE, params, imageRowMapper);
-				
-				comment.setReservationUserCommentImages(images);
-
-			}
-			
-			// 끝나면 리턴
-			return comments;
+	public List<ReservationUserComment> findByProductId(Integer productId, Integer start) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("product_id", productId);
+		params.put("start", start);
+		
+		List<ReservationUserComment> comments;
+		
+		// 상품id N
+		if(productId == 0) {
+			comments = jdbc.query(SELECT_COMMENT_ALL, params, rowMapper);
 		}
+		
+		// 상품id Y
+		else {
+			comments = jdbc.query(SELECT_COMMENT_BY_PRODUCT_ID, params, rowMapper);
+		}
+		
+		// 댓글 이미지 가져오기
+		for(int i=0; i<comments.size(); i++) {
+			ReservationUserComment comment = comments.get(i);
+			
+			params.put("comment_id", comment.getId());
+			List<ReservationUserCommentImage> images = jdbc.query(SELECT_COMMENT_IMAGE, params, imageRowMapper);
+			
+			comment.setReservationUserCommentImages(images);
+		}
+
+		return comments;
+
 	}
 
 	// get Total Count
-	public Integer getTotalCount(Integer productId, Integer start) {
-		// 상품 id 없으면 전체 조회
+	public Integer getTotalCount(Integer productId) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("product_id", productId);
+		
+		// 상품id N
 		if (productId == 0) {
-			Map<String, Integer> params = new HashMap<>();
-			params.put("start", start);
-
-//			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, Collections.emptyMap(), Integer.class);
 			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, params, Integer.class);
 		} 
-		else {
-			Map<String, Integer> params = new HashMap<>();
-			params.put("product_id", productId);
-			params.put("start", start);
-			
+		
+		// 상품id Y
+		else {			
 			return jdbc.queryForObject(SELECT_TOTAL_COUNT_BY_PRODUCT_ID, params, Integer.class);
 		}
 	}
 
 	public Integer getCommentCount(Integer productId, Integer start) {
-		// 상품 id 없으면 전체 조회
-		if (productId == 0) {
-			Map<String, Integer> params = new HashMap<>();
-			params.put("start", start);
+		Map<String, Integer> params = new HashMap<>();
+		params.put("productId", productId);
+		params.put("start", start);
 
-//			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, Collections.emptyMap(), Integer.class);
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, params, Integer.class);
+		// 상품id N
+		if (productId == 0) {
+			return jdbc.queryForObject(SELECT_COMMENT_COUNT_ALL_PRODUCT, params, Integer.class);
 		} 
+		
+		// 상품id Y
 		else {
-			Map<String, Integer> params = new HashMap<>();
-			params.put("product_id", productId);
-			params.put("start", start);
-			
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT_BY_PRODUCT_ID, params, Integer.class);
+			return jdbc.queryForObject(SELECT_COMMENT_COUNT_ALL_PRODUCT, params, Integer.class);
 		}
 	}
 

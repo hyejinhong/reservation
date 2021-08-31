@@ -124,12 +124,13 @@ public class ReservationApiController {
 	@GetMapping(path="/comments")
 	public Map<String, Object> getComments(
 			@RequestParam(name="productId", required=false, defaultValue="0") int productId,
-			@RequestParam(name="start", required=false, defaultValue="-1") int start) {
+			@RequestParam(name="start", required=false, defaultValue="0") int start) {
 		
 		// 목록 가져오기
-		List<ReservationUserComment> comments = commentService.getComments(productId);
-		int totalCount = commentService.getTotalCount(productId, start);
+		List<ReservationUserComment> comments = commentService.getComments(productId, start);
 		int commentCount = commentService.getCommentCount(productId, start);
+		int totalCount = commentService.getTotalCount(productId);
+		
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();

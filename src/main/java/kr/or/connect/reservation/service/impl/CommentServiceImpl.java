@@ -16,25 +16,13 @@ public class CommentServiceImpl implements CommentService {
 	CommentDao commentDao;
 	
 	@Override
-	public List<ReservationUserComment> getComments(Integer productId) {
-		return commentDao.findByProductId(productId);
+	public List<ReservationUserComment> getComments(Integer productId, Integer start) {
+		return commentDao.findByProductId(productId, start);
 	}
 
 	@Override
-	public int deleteDisplayInfo(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ReservationUserComment addComment(ReservationUserComment comment) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getTotalCount(Integer productId, Integer start) {
-		return commentDao.getTotalCount(productId, start);
+	public int getTotalCount(Integer productId) {
+		return commentDao.getTotalCount(productId);
 	}
 
 	@Override
