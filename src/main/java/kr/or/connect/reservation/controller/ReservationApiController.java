@@ -88,7 +88,7 @@ public class ReservationApiController {
 
 	@GetMapping(path="/displayinfos/{displayId}")
 	public Map<String, Object> getDisplayInfo(@PathVariable("displayId") int displayInfoId) {
-		// 목록 가져오기
+		// 데이터 가져오기
 		Product product = productService.getByDisplayInfoId(displayInfoId);
 		List<ProductImage> productImages = productImageService.getProductImages(product.getId());
 		List<DisplayInfoImage> displayInfoImages = displayInfoImageService.getDisplayInfoImages(displayInfoId);
@@ -109,7 +109,7 @@ public class ReservationApiController {
 	
 	@GetMapping(path="/promotions")
 	public Map<String, Object> getPromotions() {
-		// 목록 가져오기
+		// 데이터 가져오기
 		List<Promotion> promotions = promotionService.getPromotions();
 		int size = promotionService.getSize();
 		
@@ -124,7 +124,7 @@ public class ReservationApiController {
 	@GetMapping(path="/comments")
 	public Map<String, Object> getComments(
 			@RequestParam(name="productId", required=false, defaultValue="0") int productId,
-			@RequestParam(name="start", required=false, defaultValue="0") int start) {
+			@RequestParam(name="start", required=false, defaultValue="-1") int start) {
 		
 		// 목록 가져오기
 		List<ReservationUserComment> comments = commentService.getComments(productId);
