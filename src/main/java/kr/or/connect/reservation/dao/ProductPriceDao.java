@@ -1,5 +1,7 @@
 package kr.or.connect.reservation.dao;
 
+import static kr.or.connect.reservation.dao.sqls.ProductPriceDaoSqls.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +15,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.dto.ProductPrice;
-import static kr.or.connect.reservation.dao.ProductPriceDaoSqls.*;
 
 @Repository
 public class ProductPriceDao {

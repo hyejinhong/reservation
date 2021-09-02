@@ -6,7 +6,4 @@ import kr.or.connect.reservation.dto.Category;
 
 public interface CategoryService {
 	public List<Category> getCategories();
-	public int deleteCategory(Integer id);
-	public Category addCategory(Category category);
-	public int getSize();
 }

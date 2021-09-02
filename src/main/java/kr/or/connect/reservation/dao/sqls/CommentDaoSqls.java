@@ -1,4 +1,4 @@
-package kr.or.connect.reservation.dao;
+package kr.or.connect.reservation.dao.sqls;
 
 public class CommentDaoSqls {
 	// 모든 댓글 가져오기

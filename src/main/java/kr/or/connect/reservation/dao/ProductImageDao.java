@@ -1,5 +1,7 @@
 package kr.or.connect.reservation.dao;
 
+import static kr.or.connect.reservation.dao.sqls.ProductImageDaoSqls.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.dto.Product;
 import kr.or.connect.reservation.dto.ProductImage;
-
-import static kr.or.connect.reservation.dao.ProductImageDaoSqls.*;
 
 @Repository
 public class ProductImageDao {

@@ -1,5 +1,7 @@
 package kr.or.connect.reservation.dao;
 
+import static kr.or.connect.reservation.dao.sqls.CategoryDaoSqls.*;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -12,8 +14,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.dto.Category;
-
-import static kr.or.connect.reservation.dao.CategoryDaoSqls.*;
 
 @Repository
 public class CategoryDao {
@@ -31,9 +31,5 @@ public class CategoryDao {
 	// 모든 카테고리 가져오기
 	public List<Category> getAll() {
 		return jdbc.query(SELECT_ALL, rowMapper);
-	}
-
-	public int getSize() {
-		return jdbc.queryForObject(SELECT_SIZE, Collections.emptyMap(), int.class);
 	}
 }

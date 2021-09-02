@@ -19,10 +19,4 @@ public class PromotionServiceImpl implements PromotionService {
 	public List<Promotion> getPromotions() {
 		return promotionDao.getAll();
 	}
-
-	@Override
-	public Integer getSize() {
-		return promotionDao.getSize();
-	}
-
 }

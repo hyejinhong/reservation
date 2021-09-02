@@ -1,5 +1,7 @@
 package kr.or.connect.reservation.dao;
 
+import static kr.or.connect.reservation.dao.sqls.DisplayInfoDaoSqls.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +17,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.or.connect.reservation.dto.DisplayInfo;
-
-import static kr.or.connect.reservation.dao.DisplayInfoDaoSqls.*;
 
 @Repository
 public class DisplayInfoDao {
@@ -74,6 +74,5 @@ public class DisplayInfoDao {
 		params.put("display_info_id", displayInfoId);
 		return jdbc.queryForObject(SELECT_AVG_SCORE, params, Integer.class);
 	}
-
 
 }

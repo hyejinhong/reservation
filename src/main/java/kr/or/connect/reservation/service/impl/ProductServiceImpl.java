@@ -29,11 +29,4 @@ public class ProductServiceImpl implements ProductService {
 	public Integer getTotalCount(Integer categoryId) {
 		return productDao.getTotalCount(categoryId);
 	}
-
-	@Override
-	public Integer getProductCount() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

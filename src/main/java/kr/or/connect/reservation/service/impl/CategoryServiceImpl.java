@@ -21,23 +21,4 @@ public class CategoryServiceImpl implements CategoryService {
 		List<Category> categories = categoryDao.getAll();
 		return categories;
 	}
-
-	// 카테고리 삭제하기
-	@Override
-	public int deleteCategory(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Category addCategory(Category category) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getSize() {
-		return categoryDao.getSize();
-	}
-
 }

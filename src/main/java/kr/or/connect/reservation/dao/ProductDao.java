@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.dao;
 
-import static kr.or.connect.reservation.dao.ProductDaoSqls.*;
+import static kr.or.connect.reservation.dao.sqls.ProductDaoSqls.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class ProductDao {
 	
 	// 카테고리 ID별 상품 가져오기
 	public List<Product> findByCategoryId(Integer categoryId) {
-		// 카테고리 아이디 0이면 전체 조회
+		// 전체 카테고리 조회
 		if(categoryId == 0) {
 			return jdbc.query(SELECT_ALL_PRODUCT, rowMapper);
 		}
@@ -44,9 +44,8 @@ public class ProductDao {
 		}
 	}
 	
-	// total count 가져오기
 	public Integer getTotalCount(Integer categoryId) {
-		// 카테고리 아이디 0이면 전체 조회
+		// 전체 카테고리 조회
 		if(categoryId == 0) {
 			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, Collections.emptyMap(), Integer.class);
 		}

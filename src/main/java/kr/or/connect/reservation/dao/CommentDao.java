@@ -1,6 +1,6 @@
 package kr.or.connect.reservation.dao;
 
-import static kr.or.connect.reservation.dao.CommentDaoSqls.*;
+import static kr.or.connect.reservation.dao.sqls.CommentDaoSqls.*;
 
 import java.util.Collections;
 import java.util.HashMap;

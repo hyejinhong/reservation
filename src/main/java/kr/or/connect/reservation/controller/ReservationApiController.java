@@ -59,11 +59,10 @@ public class ReservationApiController {
 	public Map<String, Object> getCategories() {
 		// 목록 가져오기
 		List<Category> categories = categoryService.getCategories();
-		int size = categoryService.getSize();
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();
-		map.put("size", size);
+		map.put("size", categories.size());
 		map.put("items", categories);
 		
 		return map;
@@ -111,11 +110,10 @@ public class ReservationApiController {
 	public Map<String, Object> getPromotions() {
 		// 데이터 가져오기
 		List<Promotion> promotions = promotionService.getPromotions();
-		int size = promotionService.getSize();
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();
-		map.put("size", size);
+		map.put("size", promotions.size());
 		map.put("items", promotions);
 		
 		return map;
