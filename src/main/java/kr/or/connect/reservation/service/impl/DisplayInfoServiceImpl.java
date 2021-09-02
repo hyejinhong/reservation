@@ -21,27 +21,10 @@ public class DisplayInfoServiceImpl implements DisplayInfoService {
 		return displayInfoDao.findByCategoryId(categoryId, start);
 	}
 	
-	@Override
-	public int removeDisplayInfo(Integer id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public DisplayInfo addDiaplayInfo(DisplayInfo displayInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// 전체 전시 개수 반환
 	@Override
 	public int getTotalCount(Integer categoryId) {
 		return displayInfoDao.getTotalCount(categoryId);
-	}
-
-	@Override
-	public int getProductCount(Integer categoryId, Integer start) {
-		return displayInfoDao.getProductCount(categoryId, start);
 	}
 
 	@Override
