@@ -7,5 +7,4 @@ import kr.or.connect.reservation.dto.ReservationUserComment;
 public interface CommentService {
 	public List<ReservationUserComment> getComments(Integer productId, Integer start);
 	public int getTotalCount(Integer productId);
-	public int getCommentCount(Integer productId, Integer start);
 }

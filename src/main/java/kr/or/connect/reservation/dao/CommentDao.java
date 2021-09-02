@@ -79,20 +79,4 @@ public class CommentDao {
 		}
 	}
 
-	public Integer getCommentCount(Integer productId, Integer start) {
-		Map<String, Integer> params = new HashMap<>();
-		params.put("productId", productId);
-		params.put("start", start);
-
-		// 상품id N
-		if (productId == 0) {
-			return jdbc.queryForObject(SELECT_COMMENT_COUNT_ALL_PRODUCT, params, Integer.class);
-		} 
-		
-		// 상품id Y
-		else {
-			return jdbc.queryForObject(SELECT_COMMENT_COUNT_ALL_PRODUCT, params, Integer.class);
-		}
-	}
-
 }

@@ -24,10 +24,4 @@ public class CommentServiceImpl implements CommentService {
 	public int getTotalCount(Integer productId) {
 		return commentDao.getTotalCount(productId);
 	}
-
-	@Override
-	public int getCommentCount(Integer productId, Integer start) {
-		return commentDao.getCommentCount(productId, start);
-	}
-
 }
