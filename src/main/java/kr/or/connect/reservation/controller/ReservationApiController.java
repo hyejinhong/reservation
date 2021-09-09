@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.Category;
 import kr.or.connect.reservation.dto.DisplayInfo;
 import kr.or.connect.reservation.dto.DisplayInfoImage;
@@ -55,6 +58,11 @@ public class ReservationApiController {
 	@Autowired
 	ProductPriceService productPriceService;
 	
+	@ApiOperation(value = "카테고리 목록")
+	@ApiResponses({
+		@ApiResponse(code=200, message="OK"),
+		@ApiResponse(code=500, message="Exception")
+	})
 	@GetMapping(path="/categories")
 	public Map<String, Object> getCategories() {
 		// 목록 가져오기
@@ -68,6 +76,12 @@ public class ReservationApiController {
 		return map;
 	}
 	
+	
+	@ApiOperation(value = "전시정보 목록")
+	@ApiResponses({
+		@ApiResponse(code=200, message="OK"),
+		@ApiResponse(code=500, message="Exception")
+	})
 	@GetMapping(path="/displayinfos")
 	public Map<String, Object> getDisplayInfos(
 			@RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId,
@@ -84,7 +98,13 @@ public class ReservationApiController {
 		
 		return map;
 	}
-
+	
+	
+	@ApiOperation(value = "전시정보 상세보기")
+	@ApiResponses({
+		@ApiResponse(code=200, message="OK"),
+		@ApiResponse(code=500, message="Exception")
+	})
 	@GetMapping(path="/displayinfos/{displayId}")
 	public Map<String, Object> getDisplayInfo(@PathVariable("displayId") int displayInfoId) {
 		// 데이터 가져오기
@@ -106,6 +126,12 @@ public class ReservationApiController {
 	}
 	
 	
+	
+	@ApiOperation(value = "프로모션 목록")
+	@ApiResponses({
+		@ApiResponse(code=200, message="OK"),
+		@ApiResponse(code=500, message="Exception")
+	})
 	@GetMapping(path="/promotions")
 	public Map<String, Object> getPromotions() {
 		// 데이터 가져오기
@@ -119,6 +145,12 @@ public class ReservationApiController {
 		return map;
 	}
 	
+	
+	@ApiOperation(value = "댓글 목록")
+	@ApiResponses({
+		@ApiResponse(code=200, message="OK"),
+		@ApiResponse(code=500, message="Exception")
+	})
 	@GetMapping(path="/comments")
 	public Map<String, Object> getComments(
 			@RequestParam(name="productId", required=false, defaultValue="0") int productId,
@@ -137,6 +169,12 @@ public class ReservationApiController {
 		return map;
 	}
 
+	
+	@ApiOperation(value = "상품 목록")
+	@ApiResponses({
+		@ApiResponse(code=200, message="OK"),
+		@ApiResponse(code=500, message="Exception")
+	})
 	@GetMapping(path="/products")
 	public Map<String, Object> getProducts(
 			@RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId,

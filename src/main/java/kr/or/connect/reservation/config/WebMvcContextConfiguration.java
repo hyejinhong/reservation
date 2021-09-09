@@ -10,6 +10,13 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+
 @Configuration // 설정파일이라는 것 명시
 @EnableWebMvc
 @ComponentScan(basePackages = {"kr.or.connect.reservation.controller"})
@@ -48,5 +55,23 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 		
 		System.out.println(resolver.toString());
 		return resolver;
+	}
+	
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.select()
+				.apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.ant("/api/**"))
+				.build()
+				.apiInfo(apiInfo())
+				.useDefaultResponseMessages(false);
+	}
+	
+	private ApiInfo apiInfo() {
+		Contact contact = new Contact("hhj", "https://www.edwith.org", "hhj732@naver.com");
+		ApiInfo apiInfo = new ApiInfo("Swagger Sample", "APIs Sample", "Sample Doc 0.1v", "", 
+				contact, "This sentence will be displayed.", "/");
+		return apiInfo;
 	}
 }
