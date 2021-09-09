@@ -16,8 +16,8 @@ public class ProductServiceImpl implements ProductService {
 	ProductDao productDao;
 	
 	@Override
-	public List<Product> listProduct(Integer categoryId) {
-		return productDao.findByCategoryId(categoryId);
+	public List<Product> listProduct(Integer categoryId, Integer start) {
+		return productDao.findByCategoryId(categoryId, start);
 	}
 	
 	@Override
@@ -29,4 +29,5 @@ public class ProductServiceImpl implements ProductService {
 	public Integer getTotalCount(Integer categoryId) {
 		return productDao.getTotalCount(categoryId);
 	}
+
 }

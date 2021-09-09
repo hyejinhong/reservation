@@ -31,15 +31,16 @@ public class ProductDao {
 	}
 	
 	// 카테고리 ID별 상품 가져오기
-	public List<Product> findByCategoryId(Integer categoryId) {
+	public List<Product> findByCategoryId(Integer categoryId, Integer start) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("category_id", categoryId);
+		params.put("start", start);
+		
 		// 전체 카테고리 조회
 		if(categoryId == 0) {
-			return jdbc.query(SELECT_ALL_PRODUCT, rowMapper);
+			return jdbc.query(SELECT_ALL_PRODUCT, params, rowMapper);
 		}
 		else {
-			Map<String, Integer> params = new HashMap<>();
-			params.put("category_id", categoryId);
-			
 			return jdbc.query(SELECT_BY_CATEGORY_ID, params, rowMapper);
 		}
 	}
@@ -47,13 +48,13 @@ public class ProductDao {
 	public Integer getTotalCount(Integer categoryId) {
 		// 전체 카테고리 조회
 		if(categoryId == 0) {
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, Collections.emptyMap(), Integer.class);
+			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_CATEGORY, Collections.emptyMap(), Integer.class);
 		}
 		else {
 			Map<String, Object> params = new HashMap<>();
 			params.put("category_id", categoryId);
 			
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT_BY_CATEGORY_ID, params, Integer.class);
+			return jdbc.queryForObject(SELECT_TOTAL_COUNT, params, Integer.class);
 		}
 	}
 

@@ -143,7 +143,7 @@ public class ReservationApiController {
 			@RequestParam(name="start", required=false, defaultValue="0") int start) {
 		
 		// 목록 가져오기
-		List<Product> products = productService.listProduct(categoryId);
+		List<Product> products = productService.listProduct(categoryId, start);
 		int totalCount = productService.getTotalCount(categoryId);
 		
 		// 반환할 객체
