@@ -28,52 +28,44 @@ public class CommentDao {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
+	public List<ReservationUserComment> findAll(Integer start) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("start", start);
+		
+		List<ReservationUserComment> comments = jdbc.query(SELECT_COMMENT_ALL, params, rowMapper);
+		return comments;
+	}
+	
 	// product_id 별 조회 결과 가져오기
 	public List<ReservationUserComment> findByProductId(Integer productId, Integer start) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("product_id", productId);
 		params.put("start", start);
 		
-		List<ReservationUserComment> comments;
-		
-		// 상품id N
-		if(productId == 0) {
-			comments = jdbc.query(SELECT_COMMENT_ALL, params, rowMapper);
-		}
-		
-		// 상품id Y
-		else {
-			comments = jdbc.query(SELECT_COMMENT_BY_PRODUCT_ID, params, rowMapper);
-		}
-		
-		// 댓글 이미지 가져오기
-		for(int i=0; i<comments.size(); i++) {
-			ReservationUserComment comment = comments.get(i);
-			
-			params.put("comment_id", comment.getId());
-			List<ReservationUserCommentImage> images = jdbc.query(SELECT_COMMENT_IMAGE, params, imageRowMapper);
-			
-			comment.setReservationUserCommentImages(images);
-		}
+		List<ReservationUserComment> comments = jdbc.query(SELECT_COMMENT_BY_PRODUCT_ID, params, rowMapper);
 
 		return comments;
-
+	}
+	
+	public List<ReservationUserCommentImage> findImages(Integer commentId) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("comment_id", commentId);
+		
+		List<ReservationUserCommentImage> images = jdbc.query(SELECT_COMMENT_IMAGE, params, imageRowMapper);
+		return images;
 	}
 
-	// get Total Count
-	public Integer getTotalCount(Integer productId) {
+	public Integer getTotalCount() {
+		return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, Collections.emptyMap(), Integer.class);
+
+	}
+	
+	public Integer getTotalCountByProductId(Integer productId) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("product_id", productId);
-		
-		// 상품id N
-		if (productId == 0) {
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_PRODUCT, params, Integer.class);
-		} 
-		
-		// 상품id Y
-		else {			
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT_BY_PRODUCT_ID, params, Integer.class);
-		}
+
+		return jdbc.queryForObject(SELECT_TOTAL_COUNT_BY_PRODUCT_ID, params, Integer.class);
+
 	}
 
 }
