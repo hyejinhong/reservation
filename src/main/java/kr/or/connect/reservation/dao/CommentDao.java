@@ -21,14 +21,11 @@ import kr.or.connect.reservation.dto.ReservationUserCommentImage;
 @Repository
 public class CommentDao {
 	private NamedParameterJdbcTemplate jdbc;
-	private SimpleJdbcInsert insertAction;
 	private RowMapper<ReservationUserComment> rowMapper = BeanPropertyRowMapper.newInstance(ReservationUserComment.class);
 	private RowMapper<ReservationUserCommentImage> imageRowMapper = BeanPropertyRowMapper.newInstance(ReservationUserCommentImage.class);
 	
 	public CommentDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-		this.insertAction = new SimpleJdbcInsert(dataSource).withTableName("reservation_user_comment")
-				.usingGeneratedKeyColumns("id");
 	}
 
 	// product_id 별 조회 결과 가져오기

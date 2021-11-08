@@ -20,14 +20,10 @@ import kr.or.connect.reservation.dto.ProductImage;
 @Repository
 public class ProductImageDao {
 	private NamedParameterJdbcTemplate jdbc;
-	private SimpleJdbcInsert insertAction;
 	private RowMapper<ProductImage> rowMapper = BeanPropertyRowMapper.newInstance(ProductImage.class);
 	
 	public ProductImageDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-		this.insertAction = new SimpleJdbcInsert(dataSource)
-				.withTableName("product_image")
-				.usingGeneratedKeyColumns("id");
 	}
 
 	public List<ProductImage> listByProductId(Integer productId) {

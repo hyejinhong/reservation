@@ -19,14 +19,10 @@ import kr.or.connect.reservation.dto.Promotion;
 @Repository
 public class PromotionDao {
 	private NamedParameterJdbcTemplate jdbc;
-	private SimpleJdbcInsert insertAction;
 	private RowMapper<Promotion> rowMapper = BeanPropertyRowMapper.newInstance(Promotion.class);
 	
 	public PromotionDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-		this.insertAction = new SimpleJdbcInsert(dataSource)
-				.withTableName("promotion")
-				.usingGeneratedKeyColumns("id");
 	}
 	
 	public List<Promotion> getAll() {

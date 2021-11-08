@@ -20,14 +20,10 @@ import kr.or.connect.reservation.dto.Product;
 @Repository
 public class ProductDao {
 	private NamedParameterJdbcTemplate jdbc;
-	private SimpleJdbcInsert insertAction;
 	private RowMapper<Product> rowMapper = BeanPropertyRowMapper.newInstance(Product.class);
 	
 	public ProductDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-		this.insertAction = new SimpleJdbcInsert(dataSource)
-				.withTableName("product")
-				.usingGeneratedKeyColumns("id");
 	}
 	
 	// 카테고리 ID별 상품 가져오기

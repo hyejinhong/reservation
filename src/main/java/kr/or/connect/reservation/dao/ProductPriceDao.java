@@ -19,14 +19,10 @@ import kr.or.connect.reservation.dto.ProductPrice;
 @Repository
 public class ProductPriceDao {
 	private NamedParameterJdbcTemplate jdbc;
-	private SimpleJdbcInsert insertAction;
 	private RowMapper<ProductPrice> rowMapper = BeanPropertyRowMapper.newInstance(ProductPrice.class);
 	
 	public ProductPriceDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-		this.insertAction = new SimpleJdbcInsert(dataSource)
-				.withTableName("product_price")
-				.usingGeneratedKeyColumns("id");
 	}
 
 	public List<ProductPrice> listByProductId(Integer productId) {

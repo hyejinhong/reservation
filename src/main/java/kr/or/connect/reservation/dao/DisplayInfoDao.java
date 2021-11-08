@@ -21,13 +21,10 @@ import kr.or.connect.reservation.dto.DisplayInfo;
 @Repository
 public class DisplayInfoDao {
 	private NamedParameterJdbcTemplate jdbc;
-	private SimpleJdbcInsert insertAction;
 	private RowMapper<DisplayInfo> rowMapper = BeanPropertyRowMapper.newInstance(DisplayInfo.class);
 
 	public DisplayInfoDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-		this.insertAction = new SimpleJdbcInsert(dataSource).withTableName("display_info")
-				.usingGeneratedKeyColumns("id");
 	}
 
 	public DisplayInfo get(Integer displayInfoId) {

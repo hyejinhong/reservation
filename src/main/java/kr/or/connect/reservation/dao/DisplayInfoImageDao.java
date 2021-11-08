@@ -19,14 +19,10 @@ import kr.or.connect.reservation.dto.DisplayInfoImage;
 @Repository
 public class DisplayInfoImageDao {
 	private NamedParameterJdbcTemplate jdbc;
-	private SimpleJdbcInsert insertAction;
 	private RowMapper<DisplayInfoImage> rowMapper = BeanPropertyRowMapper.newInstance(DisplayInfoImage.class);
 	
 	public DisplayInfoImageDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-		this.insertAction = new SimpleJdbcInsert(dataSource)
-				.withTableName("display_info_image")
-				.usingGeneratedKeyColumns("id");
 	}
 
 	public List<DisplayInfoImage> listByDisplayInfoId(Integer displayInfoId) {
