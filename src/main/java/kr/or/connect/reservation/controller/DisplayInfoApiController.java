@@ -53,7 +53,7 @@ public class DisplayInfoApiController {
 			@RequestParam(defaultValue="0") int categoryId, @RequestParam(defaultValue="0") int start) {
 		
 		// 목록 가져오기
-		List<DisplayInfo> displayInfos = displayInfoService.listDisplayInfo(categoryId, start);
+		List<DisplayInfo> displayInfos = displayInfoService.getDisplayInfo(categoryId, start);
 		
 		// 반환할 객체 만들기
 		Map<String, Object> map = new HashMap<>();

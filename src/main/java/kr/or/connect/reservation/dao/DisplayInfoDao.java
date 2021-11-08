@@ -33,39 +33,36 @@ public class DisplayInfoDao {
 		
 		return jdbc.queryForObject(SELECT_ONE, params, rowMapper);
 	}
+	
+	public List<DisplayInfo> findAll(Integer start) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("start", start);
+
+		return jdbc.query(SELECT_ALL, params, rowMapper);
+	}
 
 	// category_id 별 조회 결과 가져오기
 	public List<DisplayInfo> findByCategoryId(Integer categoryId, Integer start) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("category_id", categoryId);
 		params.put("start", start);
-		
-		// 카테고리 N
-		if (categoryId == 0) {
-			return jdbc.query(SELECT_ALL, params, rowMapper);
-		}
-		
-		// 카테고리 Y
-		else {
-			return jdbc.query(SELECT_BY_CATEGORY_ID, params, rowMapper);
-		}
+			
+		return jdbc.query(SELECT_BY_CATEGORY_ID, params, rowMapper);
 	}
 
 	// 해당 카테고리의 전시 상품 수
-	public Integer getTotalCount(Integer categoryId) {
-
-		// 전체 카테고리 조회
-		if (categoryId == 0) {
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_CATEGORY, Collections.emptyMap(), Integer.class);
-		}
-		else {
-			Map<String, Integer> params = new HashMap<>();
-			params.put("category_id", categoryId);
-
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT, params, Integer.class);
-		}
+	public Integer getTotalCount() {
+		return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_CATEGORY, Collections.emptyMap(), Integer.class);
+	
 	}
 
+	public Integer getTotalCountByCategoryId(Integer categoryId) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("category_id", categoryId);
+
+		return jdbc.queryForObject(SELECT_TOTAL_COUNT, params, Integer.class);
+	}
+	
 	public int getAvgScore(int displayInfoId) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("display_info_id", displayInfoId);

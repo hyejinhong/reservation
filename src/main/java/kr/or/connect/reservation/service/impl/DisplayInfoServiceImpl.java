@@ -17,14 +17,30 @@ public class DisplayInfoServiceImpl implements DisplayInfoService {
 	DisplayInfoDao displayInfoDao;
 	
 	// 전시 정보 조회
-	public List<DisplayInfo> listDisplayInfo(Integer categoryId, Integer start) {
-		return displayInfoDao.findByCategoryId(categoryId, start);
+	public List<DisplayInfo> getDisplayInfo(Integer categoryId, Integer start) {
+		// 카테고리 정보 N
+		if(categoryId == 0) {
+			return displayInfoDao.findAll(start);
+		}
+		
+		// 카테고리 정보 Y
+		else {
+			return displayInfoDao.findByCategoryId(categoryId, start);
+		}
 	}
 	
 	// 전체 전시 개수 반환
 	@Override
 	public int getTotalCount(Integer categoryId) {
-		return displayInfoDao.getTotalCount(categoryId);
+		// 카테고리 정보 N
+		if(categoryId == 0) {
+			return displayInfoDao.getTotalCount();
+		}
+		
+		// 카테고리 정보 Y
+		else {
+			return displayInfoDao.getTotalCountByCategoryId(categoryId);
+		}	
 	}
 
 	@Override
