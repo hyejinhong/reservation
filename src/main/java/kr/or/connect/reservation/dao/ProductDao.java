@@ -26,32 +26,30 @@ public class ProductDao {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 	
+	public List<Product> findAll(Integer start) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("start", start);
+		return jdbc.query(SELECT_ALL_PRODUCT, params, rowMapper);
+	}
+	
 	// 카테고리 ID별 상품 가져오기
 	public List<Product> findByCategoryId(Integer categoryId, Integer start) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("category_id", categoryId);
 		params.put("start", start);
-		
-		// 전체 카테고리 조회
-		if(categoryId == 0) {
-			return jdbc.query(SELECT_ALL_PRODUCT, params, rowMapper);
-		}
-		else {
-			return jdbc.query(SELECT_BY_CATEGORY_ID, params, rowMapper);
-		}
+
+		return jdbc.query(SELECT_BY_CATEGORY_ID, params, rowMapper);
 	}
 	
-	public Integer getTotalCount(Integer categoryId) {
-		// 전체 카테고리 조회
-		if(categoryId == 0) {
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_CATEGORY, Collections.emptyMap(), Integer.class);
-		}
-		else {
-			Map<String, Object> params = new HashMap<>();
-			params.put("category_id", categoryId);
-			
-			return jdbc.queryForObject(SELECT_TOTAL_COUNT, params, Integer.class);
-		}
+	public Integer getTotalCount() {
+		return jdbc.queryForObject(SELECT_TOTAL_COUNT_ALL_CATEGORY, Collections.emptyMap(), Integer.class);
+	}
+	
+	public Integer getTotalCountByCategoryId(Integer categoryId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("category_id", categoryId);
+		
+		return jdbc.queryForObject(SELECT_TOTAL_COUNT, params, Integer.class);
 	}
 
 	public Product findByDisplayInfoId(Integer displayInfoId) {

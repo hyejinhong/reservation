@@ -1,5 +1,8 @@
 package kr.or.connect.reservation.service.impl;
 
+import static kr.or.connect.reservation.dao.sqls.ProductDaoSqls.SELECT_ALL_PRODUCT;
+import static kr.or.connect.reservation.dao.sqls.ProductDaoSqls.SELECT_BY_CATEGORY_ID;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +19,14 @@ public class ProductServiceImpl implements ProductService {
 	ProductDao productDao;
 	
 	@Override
-	public List<Product> listProduct(Integer categoryId, Integer start) {
-		return productDao.findByCategoryId(categoryId, start);
+	public List<Product> getProduct(Integer categoryId, Integer start) {
+		// 전체 카테고리 조회
+		if(categoryId == 0) {
+			return productDao.findAll(start);
+		}
+		else {
+			return productDao.findByCategoryId(categoryId, start);
+		}
 	}
 	
 	@Override
@@ -27,7 +36,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Integer getTotalCount(Integer categoryId) {
-		return productDao.getTotalCount(categoryId);
+		// 전체 카테고리 조회
+		if(categoryId == 0) {
+			return productDao.getTotalCount();
+		}
+		else {
+			return productDao.getTotalCountByCategoryId(categoryId);
+		}
+
+		
 	}
 
 }

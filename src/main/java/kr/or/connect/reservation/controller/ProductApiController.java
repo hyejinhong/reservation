@@ -41,7 +41,7 @@ public class ProductApiController {
 			@RequestParam(defaultValue="0") int categoryId, @RequestParam(defaultValue="0") int start) {
 		
 		// 목록 가져오기
-		List<Product> products = productService.listProduct(categoryId, start);
+		List<Product> products = productService.getProduct(categoryId, start);
 		int totalCount = productService.getTotalCount(categoryId);
 		
 		// 반환할 객체
