@@ -20,6 +20,6 @@ public class DisplayInfoDaoSqls {
 			"SELECT count(DISTINCT product_id) FROM display_info INNER JOIN product ON display_info.product_id=product.id INNER JOIN category ON product.category_id = category.id";
 
 		public static final String SELECT_AVG_SCORE =
-			"SELECT AVG(comment.score) AS avgScore FROM reservation_user_comment comment JOIN reservation_info info ON comment.reservation_info_id=info.id WHERE info.id=:display_info_id";
+			"SELECT IFNULL(AVG(comment.score), 0) AS avgScore FROM reservation_user_comment comment JOIN reservation_info info ON comment.reservation_info_id=info.id WHERE info.id=:display_info_id";
 
 }
