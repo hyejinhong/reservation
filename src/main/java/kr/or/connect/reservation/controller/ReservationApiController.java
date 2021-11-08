@@ -85,8 +85,7 @@ public class ReservationApiController {
 	})
 	@GetMapping(path="/displayinfos")
 	public Map<String, Object> getDisplayInfos(
-			@RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId,
-			@RequestParam(name="start", required=false, defaultValue="0") int start) {
+			@RequestParam(defaultValue="0") int categoryId, @RequestParam(defaultValue="0") int start) {
 		
 		// 목록 가져오기
 		List<DisplayInfo> displayInfos = displayInfoService.listDisplayInfo(categoryId, start);
@@ -107,7 +106,7 @@ public class ReservationApiController {
 		@ApiResponse(code=500, message="Exception")
 	})
 	@GetMapping(path="/displayinfos/{displayId}")
-	public Map<String, Object> getDisplayInfo(@PathVariable("displayId") int displayInfoId) {
+	public Map<String, Object> getDisplayInfo(@PathVariable int displayInfoId) {
 		// 데이터 가져오기
 		Product product = productService.getByDisplayInfoId(displayInfoId);
 		List<ProductImage> productImages = productImageService.getProductImages(product.getId());
@@ -154,8 +153,7 @@ public class ReservationApiController {
 	})
 	@GetMapping(path="/comments")
 	public Map<String, Object> getComments(
-			@RequestParam(name="productId", required=false, defaultValue="0") int productId,
-			@RequestParam(name="start", required=false, defaultValue="0") int start) {
+			@RequestParam(defaultValue="0") int productId, @RequestParam(defaultValue="0") int start) {
 		
 		// 목록 가져오기
 		List<ReservationUserComment> comments = commentService.getComments(productId, start);
@@ -178,8 +176,7 @@ public class ReservationApiController {
 	})
 	@GetMapping(path="/products")
 	public Map<String, Object> getProducts(
-			@RequestParam(name="categoryId", required=false, defaultValue="0") int categoryId,
-			@RequestParam(name="start", required=false, defaultValue="0") int start) {
+			@RequestParam(defaultValue="0") int categoryId, @RequestParam(defaultValue="0") int start) {
 		
 		// 목록 가져오기
 		List<Product> products = productService.listProduct(categoryId, start);
