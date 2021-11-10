@@ -17,6 +17,7 @@ public class DisplayInfoServiceImpl implements DisplayInfoService {
 	DisplayInfoDao displayInfoDao;
 	
 	// 전시 정보 조회
+	@Override
 	public List<DisplayInfo> getDisplayInfo(Integer categoryId, Integer start) {
 		// 카테고리 정보 N
 		if(categoryId == 0) {
