@@ -1,12 +1,11 @@
 package kr.or.connect.reservation.config;
 
 import javax.servlet.Filter;
-
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
+	
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class<?>[] { ApplicationConfig.class, SecurityConfig.class };
