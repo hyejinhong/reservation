@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -48,7 +49,8 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		// /로 요청이 들어오면 index라는 view를 보여주세요.
-		registry.addViewController("/").setViewName("index");
+//		registry.addViewController("/").setViewName("index");
+		registry.addRedirectViewController("/", "/main");
 	}
 	
 	// view resolver가 뷰의 이름을 가지고 어떤 뷰인지 찾아내도록 함
@@ -62,6 +64,9 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 		return resolver;
 	}
 	
-	
+	@Override
+	public void configureViewResolvers(ViewResolverRegistry registry) {
+		registry.jsp("/WEB-INF/views/", ".jsp");
+	}
 
 }
