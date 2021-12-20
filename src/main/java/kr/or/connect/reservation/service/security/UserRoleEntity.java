@@ -5,7 +5,6 @@ public class UserRoleEntity {
 	private String roleName;
 	
 	public UserRoleEntity(String userLoginId, String roleName) {
-		super();
 		this.userLoginId = userLoginId;
 		this.roleName = roleName;
 	}

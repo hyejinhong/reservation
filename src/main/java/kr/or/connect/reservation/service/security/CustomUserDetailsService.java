@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import kr.or.connect.reservation.dao.UserDao;
+import kr.or.connect.reservation.dao.UserRoleDao;
 import kr.or.connect.reservation.dto.User;
 import kr.or.connect.reservation.dto.UserRole;
 import kr.or.connect.reservation.service.UserRoleService;
@@ -20,38 +22,43 @@ import kr.or.connect.reservation.service.UserService;
 public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Autowired
-	UserService userService;
-	@Autowired
-	UserRoleService userRoleService;
+	UserDbService userDbService;
 	
 	@Override
 	public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-		User customUser = userService.getUserByEmail(loginId);
-		if(customUser != null) {
-			throw new UsernameNotFoundException("사용자가 입력한 아이디에 해당하는 정보가 없습니다.");
+		UserEntity user = userDbService.getUser(loginId);
+		System.out.println("입력 아이디 : " + loginId);
+		System.out.println("입력된 패스워드 뭐임? " + user.getPassword());
+		
+		if(user == null) {
+			throw new UsernameNotFoundException("그런 유저는 없습니다.");
 		}
 		
 		// CustomUserDetails 객체로 전달
-		CustomUserDetails customUserDetails = new CustomUserDetails();
-		customUserDetails.setUsername(customUser.getEmail());
-		customUserDetails.setPassword(customUser.getPassword());
+		CustomUserDetails cutomUserDetails = new CustomUserDetails();
+		cutomUserDetails.setUsername(user.getLoginUserId());
+		cutomUserDetails.setPassword(user.getPassword());
 		
-		List<UserRole> customRoles = userRoleService.getRoles(loginId);
+		List<UserRoleEntity> roles = userDbService.getUserRoles(loginId);
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		
-		if(customRoles != null) {
-			for(UserRole role : customRoles) {
+		if(roles != null) {
+			// 모든 권한에 대하여...
+			for(UserRoleEntity role : roles) {
+				// authorities 정보에 하나씩 추가해준다.
+				// MemberRole 이름은 "ROLE_"로 시작해야 한다.
 				authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
 			}
 		}
 		
-		customUserDetails.setAuthorities(authorities);
-		customUserDetails.setEnabled(true);
-		customUserDetails.setAccountNonExpired(true);
-		customUserDetails.setAccountNonLocked(true);
-		customUserDetails.setCredentialsNonExpired(true);
-
-		return customUserDetails;
+		// CustomUserDetails 객체에 방금 받아온 권한 목록(authorities)를 설정한다.
+		cutomUserDetails.setAuthorities(authorities);
+		cutomUserDetails.setEnabled(true);
+		cutomUserDetails.setAccountNonExpired(true);
+		cutomUserDetails.setAccountNonLocked(true);
+		cutomUserDetails.setCredentialsNonExpired(true);
+		
+		return cutomUserDetails;
 	}
 
 }
