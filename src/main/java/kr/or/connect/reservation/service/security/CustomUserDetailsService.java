@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
 		UserEntity user = userDbService.getUser(loginId);
 		System.out.println("입력 아이디 : " + loginId);
-		System.out.println("입력된 패스워드 뭐임? " + user.getPassword());
+		System.out.println("비밀번호는? " + user.getPassword());
 		
 		if(user == null) {
 			throw new UsernameNotFoundException("그런 유저는 없습니다.");

@@ -11,13 +11,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration // 설정파일이라는 것 명시
@@ -53,7 +46,7 @@ public class WebMvcContextConfiguration extends WebMvcConfigurerAdapter {
 		registry.addRedirectViewController("/", "/main");
 	}
 	
-	// view resolver가 뷰의 이름을 가지고 어떤 뷰인지 찾아내도록 함
+	//	 view resolver가 뷰의 이름을 가지고 어떤 뷰인지 찾아내도록 함
 	@Bean
 	public InternalResourceViewResolver getInternalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
