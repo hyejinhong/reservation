@@ -5,12 +5,13 @@ import java.util.Date;
 public class ReservationInfo {
 	private Integer id;
 	private Integer productId;
+	private Integer cancelFlag;
 	private Integer displayInfoId;
 	private Integer userId;
 	private Date reservationDate;
-	private Integer cancelFlag;
 	private Date createDate;
 	private Date modifyDate;
+	
 	public Integer getId() {
 		return id;
 	}
