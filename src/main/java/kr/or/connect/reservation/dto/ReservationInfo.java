@@ -12,6 +12,16 @@ public class ReservationInfo {
 	private Date createDate;
 	private Date modifyDate;
 	
+	public ReservationInfo(Integer productId, Integer displayInfoId, Integer userId, Date reservationDate) {
+		this.productId = productId;
+		this.displayInfoId = displayInfoId;
+		this.userId = userId;
+		this.reservationDate = reservationDate;
+		
+		this.cancelFlag = 0;
+		this.createDate = new Date();
+	}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,21 +17,35 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.or.connect.reservation.service.ReservationInfoService;
+
 @RestController
 @RequestMapping(path = "/api/reservationInfos")
 public class ReservationInfoApiController {
 
+	@Autowired
+	ReservationInfoService reservationInfoService;
+	
 	@PostMapping
-	public void write(@RequestBody Map<String, Object> body) {
+	public Map<String, Object> write(@RequestBody Map<String, Object> body) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		String pricesString = body.get("prices").toString().replace("=", ":");
 		pricesString = pricesString.substring(1, pricesString.length()-1);
+		
+		Map<String, Object> result = new HashMap<>();
 
 		try {
 			Map<String, Integer> prices = mapper.readValue(pricesString, Map.class);
-			System.out.println(prices.get("count"));
-			System.out.println(prices.get("productPriceId"));
+			
+			int productId = (int) body.get("productId");
+			int displayInfoId  = (int) body.get("displayInfoId");
+			String reservationYearMonthDay = (String) body.get("reservationYearMonthDay");
+			int userId = (int) body.get("userId");
+			
+			int generatedId = reservationInfoService.addReservationInfo(prices, productId, displayInfoId, reservationYearMonthDay, userId);
+			result.put("id", generatedId);
+		
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -39,6 +54,8 @@ public class ReservationInfoApiController {
 			e.printStackTrace();
 		}
 	
+		// 여기 해야됨
+		return result;
 	}
 	
 }
