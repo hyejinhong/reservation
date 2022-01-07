@@ -26,4 +26,9 @@ public class ReservationInfoServiceImpl implements ReservationInfoService{
 		return id;
 	}
 
+	@Override
+	public ReservationInfo getReservationInfo(int id) {
+		return reservationInfoDao.findById(id);
+	}
+
 }

@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class ReservationInfo {
 	private Integer id;
@@ -11,6 +12,7 @@ public class ReservationInfo {
 	private Date reservationDate;
 	private Date createDate;
 	private Date modifyDate;
+	private List<ReservationInfoPrice> prices;
 	
 	public ReservationInfo(Integer productId, Integer displayInfoId, Integer userId, Date reservationDate) {
 		this.productId = productId;
@@ -22,9 +24,15 @@ public class ReservationInfo {
 		this.createDate = new Date();
 	}
 	
+	// default constructor
+	public ReservationInfo() {
+	}
+
+	
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -70,6 +78,14 @@ public class ReservationInfo {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+	public List<ReservationInfoPrice> getPrices() {
+		return prices;
+	}
+
+	public void setPrices(List<ReservationInfoPrice> prices) {
+		this.prices = prices;
+	}
+
 	@Override
 	public String toString() {
 		return "ReservationInfo [id=" + id + ", productId=" + productId + ", displayInfoId=" + displayInfoId

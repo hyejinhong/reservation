@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.or.connect.reservation.dto.ReservationInfo;
 import kr.or.connect.reservation.service.ReservationInfoService;
 
 @RestController
@@ -27,7 +28,7 @@ public class ReservationInfoApiController {
 	ReservationInfoService reservationInfoService;
 	
 	@PostMapping
-	public Map<String, Object> write(@RequestBody Map<String, Object> body) throws Exception {
+	public ReservationInfo write(@RequestBody Map<String, Object> body) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		String pricesString = body.get("prices").toString().replace("=", ":");
@@ -44,8 +45,10 @@ public class ReservationInfoApiController {
 			int userId = (int) body.get("userId");
 			
 			int generatedId = reservationInfoService.addReservationInfo(prices, productId, displayInfoId, reservationYearMonthDay, userId);
-			result.put("id", generatedId);
-		
+			
+			ReservationInfo reservationInfo = reservationInfoService.getReservationInfo(generatedId);
+
+			return reservationInfo;
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -54,8 +57,8 @@ public class ReservationInfoApiController {
 			e.printStackTrace();
 		}
 	
-		// 여기 해야됨
-		return result;
+		// 여기 해야됨 prices 추가
+		return null;
 	}
 	
 }
