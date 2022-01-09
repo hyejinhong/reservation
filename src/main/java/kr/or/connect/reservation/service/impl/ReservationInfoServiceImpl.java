@@ -1,21 +1,25 @@
 package kr.or.connect.reservation.service.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.connect.reservation.dao.ReservationInfoDao;
+import kr.or.connect.reservation.dao.ReservationInfoPriceDao;
 import kr.or.connect.reservation.dto.ReservationInfo;
+import kr.or.connect.reservation.dto.ReservationInfoPrice;
 import kr.or.connect.reservation.service.ReservationInfoService;
 
 @Service
-public class ReservationInfoServiceImpl implements ReservationInfoService{
+public class ReservationInfoServiceImpl implements ReservationInfoService {
 	
 	@Autowired
 	ReservationInfoDao reservationInfoDao;
+	
+	@Autowired
+	ReservationInfoPriceDao priceDao;
 	
 	@Override
 	public int addReservationInfo(Map<String, Integer> prices, int productId, int displayInfoId, String reservationYearMonthDay, int userId) throws Exception {
@@ -28,7 +32,13 @@ public class ReservationInfoServiceImpl implements ReservationInfoService{
 
 	@Override
 	public ReservationInfo getReservationInfo(int id) {
-		return reservationInfoDao.findById(id);
+		ReservationInfo reservationInfo = reservationInfoDao.findById(id);
+		
+		// price 찾아서 넣어주기
+		List<ReservationInfoPrice> prices = priceDao.getPrices(id);
+		reservationInfo.setPrices(prices);
+		
+		return reservationInfo;
 	}
 
 }

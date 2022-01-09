@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.connect.reservation.dto.ReservationInfo;
+import kr.or.connect.reservation.dto.ReservationInfoPrice;
+import kr.or.connect.reservation.service.ReservationInfoPriceService;
 import kr.or.connect.reservation.service.ReservationInfoService;
 
 @RestController
@@ -26,6 +28,8 @@ public class ReservationInfoApiController {
 
 	@Autowired
 	ReservationInfoService reservationInfoService;
+	@Autowired
+	ReservationInfoPriceService reservationInfoPriceService;
 	
 	@PostMapping
 	public ReservationInfo write(@RequestBody Map<String, Object> body) throws Exception {
@@ -34,18 +38,23 @@ public class ReservationInfoApiController {
 		String pricesString = body.get("prices").toString().replace("=", ":");
 		pricesString = pricesString.substring(1, pricesString.length()-1);
 		
-		Map<String, Object> result = new HashMap<>();
-
 		try {
+			// Price 파싱
 			Map<String, Integer> prices = mapper.readValue(pricesString, Map.class);
-			
+
+			// Info 저장			
 			int productId = (int) body.get("productId");
 			int displayInfoId  = (int) body.get("displayInfoId");
 			String reservationYearMonthDay = (String) body.get("reservationYearMonthDay");
 			int userId = (int) body.get("userId");
-			
+	
+			// 생성된 reservationInfo id
 			int generatedId = reservationInfoService.addReservationInfo(prices, productId, displayInfoId, reservationYearMonthDay, userId);
 			
+			// price 정보 추가
+			ReservationInfoPrice reservationInfoPrice = new ReservationInfoPrice(generatedId, prices.get("productPriceId"), prices.get("count"));
+			reservationInfoPriceService.addReservationInfoPrices(reservationInfoPrice);
+
 			ReservationInfo reservationInfo = reservationInfoService.getReservationInfo(generatedId);
 
 			return reservationInfo;
