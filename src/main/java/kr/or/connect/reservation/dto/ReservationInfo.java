@@ -25,6 +25,7 @@ public class ReservationInfo {
 		
 		this.cancelFlag = 0;
 		this.createDate = new Date();
+		this.modifyDate = new Date();
 	}
 	
 	// default constructor
