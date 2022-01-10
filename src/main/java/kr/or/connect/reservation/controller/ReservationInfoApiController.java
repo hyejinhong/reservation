@@ -87,6 +87,7 @@ public class ReservationInfoApiController {
 		result.put("dd", principal.getName());
 		
 		List<ReservationInfo> list = reservationInfoService.getReservationInfosByUser(user.getId());
+		result.put("size", list.size());
 		result.put("items", list);
 		return result;
 	}

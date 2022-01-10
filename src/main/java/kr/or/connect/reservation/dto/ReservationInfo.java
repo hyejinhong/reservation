@@ -6,6 +6,9 @@ import java.util.List;
 public class ReservationInfo {
 	private Integer id;
 	private Integer productId;
+	private String productDescription;
+	private String productContent;
+	private int sumPrice;
 	private Integer cancelFlag;
 	private Integer displayInfoId;
 	private Integer userId;
@@ -29,6 +32,30 @@ public class ReservationInfo {
 	}
 
 	
+	public String getProductDescription() {
+		return productDescription;
+	}
+
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+
+	public String getProductContent() {
+		return productContent;
+	}
+
+	public void setProductContent(String productContent) {
+		this.productContent = productContent;
+	}
+
+	public int getSumPrice() {
+		return sumPrice;
+	}
+
+	public void setSumPrice(int sumPrice) {
+		this.sumPrice = sumPrice;
+	}
+
 	public Integer getId() {
 		return id;
 	}

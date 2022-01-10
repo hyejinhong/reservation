@@ -1,6 +1,7 @@
 package kr.or.connect.reservation.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,15 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 
 	@Override
 	public List<ReservationInfo> getReservationInfosByUser(int userId) {
-		return reservationInfoDao.findByUserId(userId);
+		ArrayList<ReservationInfo> infos = (ArrayList<ReservationInfo>) reservationInfoDao.findByUserId(userId);
+		for(ReservationInfo info : infos) {
+			
+			// price 찾아서 넣어주기
+			List<ReservationInfoPrice> prices = priceDao.getPrices(info.getId());
+			info.setPrices(prices);
+		}
+		
+		return infos;
 	}
 
 }
