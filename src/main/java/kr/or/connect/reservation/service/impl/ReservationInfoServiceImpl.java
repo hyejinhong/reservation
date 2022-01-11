@@ -23,13 +23,10 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 	ReservationInfoPriceDao priceDao;
 	
 	@Override
-	public int addReservationInfo(Map<String, Integer> prices, int productId, int displayInfoId, String reservationYearMonthDay, int userId) throws Exception {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
-		ReservationInfo reservationInfo = new ReservationInfo(productId, displayInfoId, userId, format.parse(reservationYearMonthDay));
-		int id = reservationInfoDao.insert(reservationInfo);
-		
-		return id;
+	public int addReservationInfo(ReservationInfo reservationInfo) {
+		return reservationInfoDao.insert(reservationInfo); 
 	}
+
 
 	@Override
 	public ReservationInfo getReservationInfo(int id) {
@@ -54,5 +51,4 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 		
 		return infos;
 	}
-
 }

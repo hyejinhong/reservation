@@ -38,7 +38,9 @@ public class ReservationInfoApiController {
 	UserService userService;
 	
 	@PostMapping
-	public ReservationInfo write(@RequestBody Map<String, Object> body) throws Exception {
+	public Map<String, Object> write(@RequestBody Map<String, Object> body) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		String pricesString = body.get("prices").toString().replace("=", ":");
@@ -49,21 +51,33 @@ public class ReservationInfoApiController {
 			Map<String, Integer> prices = mapper.readValue(pricesString, Map.class);
 
 			// Info 저장			
+
 			int productId = (int) body.get("productId");
 			int displayInfoId  = (int) body.get("displayInfoId");
 			String reservationYearMonthDay = (String) body.get("reservationYearMonthDay");
 			int userId = (int) body.get("userId");
-	
+
+			ReservationInfo reservationInfo = new ReservationInfo(productId, displayInfoId, userId, reservationYearMonthDay);
 			// 생성된 reservationInfo id
-			int generatedId = reservationInfoService.addReservationInfo(prices, productId, displayInfoId, reservationYearMonthDay, userId);
+			int generatedId = reservationInfoService.addReservationInfo(reservationInfo);
 			
 			// price 정보 추가
 			ReservationInfoPrice reservationInfoPrice = new ReservationInfoPrice(generatedId, prices.get("productPriceId"), prices.get("count"));
 			reservationInfoPriceService.addReservationInfoPrices(reservationInfoPrice);
 
-			ReservationInfo reservationInfo = reservationInfoService.getReservationInfo(generatedId);
+			reservationInfo.setId(generatedId);
 
-			return reservationInfo;
+			// 일단 하드코딩으로라도.
+			result.put("id", reservationInfo.getId());
+			result.put("productId", reservationInfo.getProductId());
+			result.put("cancelFlag", reservationInfo.getCancelFlag());
+			result.put("displayInfoId", reservationInfo.getDisplayInfoId());
+			result.put("userId", reservationInfo.getUserId());
+			result.put("reservationDate", reservationInfo.getReservationDate());
+			result.put("createDate", reservationInfo.getCreateDate());
+			result.put("modifyDate", reservationInfo.getModifyDate());
+			result.put("prices", body.get("prices"));
+			
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -72,7 +86,7 @@ public class ReservationInfoApiController {
 			e.printStackTrace();
 		}
 	
-		return null;
+		return result;
 	}
 	
 	@GetMapping
@@ -82,10 +96,7 @@ public class ReservationInfoApiController {
 		// 현재 로그인한 사람 userId 찾기
 		User user = userService.getUserByEmail(principal.getName());
 		
-		// ReservationInfos 가져와야함
-		result.put("퇴싀트", "ㅎㅇ");
-		result.put("dd", principal.getName());
-		
+		// ReservationInfos 가져와야함		
 		List<ReservationInfo> list = reservationInfoService.getReservationInfosByUser(user.getId());
 		result.put("size", list.size());
 		result.put("items", list);

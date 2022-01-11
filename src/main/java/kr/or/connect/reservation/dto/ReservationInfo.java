@@ -1,5 +1,7 @@
 package kr.or.connect.reservation.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -17,11 +19,12 @@ public class ReservationInfo {
 	private Date modifyDate;
 //	private List<ReservationInfoPrice> prices;
 	
-	public ReservationInfo(Integer productId, Integer displayInfoId, Integer userId, Date reservationDate) {
+	public ReservationInfo(Integer productId, Integer displayInfoId, Integer userId, String reservationDate) throws ParseException {
 		this.productId = productId;
 		this.displayInfoId = displayInfoId;
 		this.userId = userId;
-		this.reservationDate = reservationDate;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.mm.dd");
+		this.reservationDate = format.parse(reservationDate);
 		
 		this.cancelFlag = 0;
 		this.createDate = new Date();
@@ -106,13 +109,6 @@ public class ReservationInfo {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-//	public List<ReservationInfoPrice> getPrices() {
-//		return prices;
-//	}
-//
-//	public void setPrices(List<ReservationInfoPrice> prices) {
-//		this.prices = prices;
-//	}
 
 	@Override
 	public String toString() {

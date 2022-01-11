@@ -6,7 +6,7 @@ import java.util.Map;
 import kr.or.connect.reservation.dto.ReservationInfo;
 
 public interface ReservationInfoService {
-	int addReservationInfo(Map<String, Integer> prices, int productId, int displayInfoId, String reservationYearMonthDay, int userId) throws Exception;
+	int addReservationInfo(ReservationInfo reservationInfo);
 	ReservationInfo getReservationInfo(int id);
 	List<ReservationInfo> getReservationInfosByUser(int userId);
 }
