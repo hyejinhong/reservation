@@ -35,9 +35,9 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 	public ReservationInfo getReservationInfo(int id) {
 		ReservationInfo reservationInfo = reservationInfoDao.findById(id);
 		
-		// price 찾아서 넣어주기
-		List<ReservationInfoPrice> prices = priceDao.getPrices(id);
-		reservationInfo.setPrices(prices);
+//		// price 찾아서 넣어주기
+//		List<ReservationInfoPrice> prices = priceDao.getPrices(id);
+//		reservationInfo.setPrices(prices);
 		
 		return reservationInfo;
 	}
@@ -47,9 +47,9 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 		ArrayList<ReservationInfo> infos = (ArrayList<ReservationInfo>) reservationInfoDao.findByUserId(userId);
 		for(ReservationInfo info : infos) {
 			
-			// price 찾아서 넣어주기
-			List<ReservationInfoPrice> prices = priceDao.getPrices(info.getId());
-			info.setPrices(prices);
+//			// price 찾아서 넣어주기
+//			List<ReservationInfoPrice> prices = priceDao.getPrices(info.getId());
+//			info.setPrices(prices);
 		}
 		
 		return infos;

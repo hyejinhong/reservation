@@ -15,7 +15,7 @@ public class ReservationInfo {
 	private Date reservationDate;
 	private Date createDate;
 	private Date modifyDate;
-	private List<ReservationInfoPrice> prices;
+//	private List<ReservationInfoPrice> prices;
 	
 	public ReservationInfo(Integer productId, Integer displayInfoId, Integer userId, Date reservationDate) {
 		this.productId = productId;
@@ -106,13 +106,13 @@ public class ReservationInfo {
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	public List<ReservationInfoPrice> getPrices() {
-		return prices;
-	}
-
-	public void setPrices(List<ReservationInfoPrice> prices) {
-		this.prices = prices;
-	}
+//	public List<ReservationInfoPrice> getPrices() {
+//		return prices;
+//	}
+//
+//	public void setPrices(List<ReservationInfoPrice> prices) {
+//		this.prices = prices;
+//	}
 
 	@Override
 	public String toString() {
