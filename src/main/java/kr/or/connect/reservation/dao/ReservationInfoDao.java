@@ -49,4 +49,11 @@ public class ReservationInfoDao {
 		return jdbc.query(SELECT_BY_USER_ID, params, rowMapper);
 	
 	}
+
+	public String update(int id) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		
+		return jdbc.update(UPDATE_BY_ID, params) == 0 ? "fail" : "success";
+	}
 }

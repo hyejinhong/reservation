@@ -9,4 +9,5 @@ public interface ReservationInfoService {
 	int addReservationInfo(ReservationInfo reservationInfo);
 	ReservationInfo getReservationInfo(int id);
 	List<ReservationInfo> getReservationInfosByUser(int userId);
+	String updateReservation(int id);
 }

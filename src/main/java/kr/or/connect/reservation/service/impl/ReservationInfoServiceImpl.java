@@ -51,4 +51,10 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 		
 		return infos;
 	}
+
+
+	@Override
+	public String updateReservation(int id) {
+		return reservationInfoDao.update(id);
+	}
 }

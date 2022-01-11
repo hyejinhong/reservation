@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -101,5 +102,15 @@ public class ReservationInfoApiController {
 		result.put("size", list.size());
 		result.put("items", list);
 		return result;
+	}
+	
+	@PutMapping
+	public Map<String, Object> updateReservation(@RequestBody Map<String, Object> body) {
+		int id = (int) body.get("id");
+		String result = reservationInfoService.updateReservation(id);
+		
+		Map<String, Object> ret = new HashMap<>();
+		ret.put("result", result);
+		return ret;
 	}
 }
