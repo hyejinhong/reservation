@@ -11,6 +11,7 @@ import kr.or.connect.reservation.dao.ReservationInfoDao;
 import kr.or.connect.reservation.dao.ReservationInfoPriceDao;
 import kr.or.connect.reservation.dto.ReservationInfo;
 import kr.or.connect.reservation.dto.ReservationInfoPrice;
+import kr.or.connect.reservation.dto.ReservationInfoResult;
 import kr.or.connect.reservation.service.ReservationInfoService;
 
 @Service
@@ -56,5 +57,17 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 	@Override
 	public String updateReservation(int id) {
 		return reservationInfoDao.update(id);
+	}
+
+
+	@Override
+	public ReservationInfoResult getReservationInfoResult(int id) {
+		ReservationInfoResult result = reservationInfoDao.findResultById(id);
+		
+		// price 찾아서 넣어주기
+		List<ReservationInfoPrice> prices = priceDao.getPrices(id);
+		result.setPrices(prices);
+		
+		return result;
 	}
 }

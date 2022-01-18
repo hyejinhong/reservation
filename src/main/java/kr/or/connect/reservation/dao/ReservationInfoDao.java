@@ -15,6 +15,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import kr.or.connect.reservation.dto.ReservationInfo;
+import kr.or.connect.reservation.dto.ReservationInfoResult;
+
 import static kr.or.connect.reservation.dao.sqls.ReservationInfoSqls.*;
 
 @Repository
@@ -22,6 +24,7 @@ public class ReservationInfoDao {
 	private NamedParameterJdbcTemplate jdbc;
 	private SimpleJdbcInsert insertAction;
 	private RowMapper<ReservationInfo> rowMapper = BeanPropertyRowMapper.newInstance(ReservationInfo.class);
+	private RowMapper<ReservationInfoResult> resultRowMapper = BeanPropertyRowMapper.newInstance(ReservationInfoResult.class);
 	
 	public ReservationInfoDao(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -55,5 +58,12 @@ public class ReservationInfoDao {
 		params.put("id", id);
 		
 		return jdbc.update(UPDATE_BY_ID, params) == 0 ? "fail" : "success";
+	}
+
+	public ReservationInfoResult findResultById(int id) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+
+		return jdbc.queryForObject(SELECT_RESULT_BY_ID, params, resultRowMapper);
 	}
 }

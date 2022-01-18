@@ -9,4 +9,7 @@ public class ReservationInfoSqls {
 	
 	public static final String UPDATE_BY_ID =
 			"UPDATE reservation_info SET cancel_flag=1 WHERE id=:id";
+	
+	public static final String SELECT_RESULT_BY_ID = 
+			"SELECT id, product_id, cancel_flag, display_info_id, user_id, reservation_date, create_date, modify_date FROM reservation_info WHERE id=:id";
 }
