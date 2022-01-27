@@ -55,7 +55,6 @@ public class ReservationInfoApiController {
 			Map<String, Integer> prices = mapper.readValue(pricesString, Map.class);
 
 			// Info 저장			
-
 			int productId = (int) body.get("productId");
 			int displayInfoId  = (int) body.get("displayInfoId");
 			String reservationYearMonthDay = (String) body.get("reservationYearMonthDay");
@@ -70,17 +69,6 @@ public class ReservationInfoApiController {
 			reservationInfoPriceService.addReservationInfoPrices(reservationInfoPrice);
 
 			reservationInfo.setId(generatedId);
-
-			// 일단 하드코딩으로라도.
-//			result.put("id", reservationInfo.getId());
-//			result.put("productId", reservationInfo.getProductId());
-//			result.put("cancelFlag", reservationInfo.getCancelFlag());
-//			result.put("displayInfoId", reservationInfo.getDisplayInfoId());
-//			result.put("userId", reservationInfo.getUserId());
-//			result.put("reservationDate", reservationInfo.getReservationDate());
-//			result.put("createDate", reservationInfo.getCreateDate());
-//			result.put("modifyDate", reservationInfo.getModifyDate());
-//			result.put("prices", body.get("prices"));
 			
 			return reservationInfoService.getReservationInfoResult(generatedId);
 		
@@ -102,8 +90,9 @@ public class ReservationInfoApiController {
 		// 현재 로그인한 사람 userId 찾기
 		User user = userService.getUserByEmail(principal.getName());
 		
-		// ReservationInfos 가져와야함		
+		// ReservationInfos		
 		List<ReservationInfo> list = reservationInfoService.getReservationInfosByUser(user.getId());
+		
 		result.put("size", list.size());
 		result.put("items", list);
 		return result;

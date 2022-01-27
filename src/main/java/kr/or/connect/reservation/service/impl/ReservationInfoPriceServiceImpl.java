@@ -27,5 +27,4 @@ public class ReservationInfoPriceServiceImpl implements ReservationInfoPriceServ
 	public int addReservationInfoPrices(ReservationInfoPrice reservationInfoPrice) {
 		return reservationInfoPriceDao.insert(reservationInfoPrice);
 	}
-
 }

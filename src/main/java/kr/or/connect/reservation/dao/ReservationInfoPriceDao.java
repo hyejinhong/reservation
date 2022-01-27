@@ -41,4 +41,11 @@ public class ReservationInfoPriceDao {
 		params.put("reservation_info_id", reservationInfoId);
 		return jdbc.query(SELECT_BY_INFO_ID, params, rowMapper);
 	}
+
+	public int getSumPrice(int reservationInfoId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("reservation_info_id", reservationInfoId);
+		
+		return jdbc.queryForObject(SELECT_SUM_PRICE, params, Integer.class);
+	}
 }
