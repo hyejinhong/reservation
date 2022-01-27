@@ -65,7 +65,6 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 		return reservationInfoDao.update(id);
 	}
 
-
 	@Override
 	public ReservationInfoResult getReservationInfoResult(int id) {
 		ReservationInfoResult result = reservationInfoDao.findResultById(id);
