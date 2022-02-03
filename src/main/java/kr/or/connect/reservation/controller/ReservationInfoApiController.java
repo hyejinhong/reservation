@@ -23,6 +23,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import kr.or.connect.reservation.dto.ReservationInfo;
 import kr.or.connect.reservation.dto.ReservationInfoPrice;
 import kr.or.connect.reservation.dto.ReservationInfoResult;
@@ -42,6 +45,11 @@ public class ReservationInfoApiController {
 	@Autowired
 	UserService userService;
 	
+	@ApiOperation(value = "예약 등록하기")
+	@ApiResponses({
+		@ApiResponse(code=200, message = "OK"),
+		@ApiResponse(code=500, message = "Exception")
+	})
 	@PostMapping
 	public ReservationInfoResult write(@RequestBody Map<String, Object> body) throws Exception {
 		
@@ -83,6 +91,11 @@ public class ReservationInfoApiController {
 		return null;
 	}
 	
+	@ApiOperation(value = "예약 정보 구하기")
+	@ApiResponses({
+		@ApiResponse(code=200, message="OK"),
+		@ApiResponse(code=500, message="Exception")
+	})
 	@GetMapping
 	public Map<String, Object> getReservationInfosByUser(Principal principal) {
 		Map<String, Object> result = new HashMap<>();
@@ -98,6 +111,11 @@ public class ReservationInfoApiController {
 		return result;
 	}
 	
+	@ApiOperation(value = "예약 취소하기")
+	@ApiResponses({
+		@ApiResponse(code=200, message="OK"),
+		@ApiResponse(code=200, message="Exception")
+	})
 	@PutMapping
 	public Map<String, Object> updateReservation(@RequestBody Map<String, Object> body) {
 		int id = (int) body.get("id");
