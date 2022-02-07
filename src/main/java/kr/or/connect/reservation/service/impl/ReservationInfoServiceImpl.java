@@ -33,19 +33,7 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 	public int addReservationInfo(ReservationInfo reservationInfo) {
 		return reservationInfoDao.insert(reservationInfo); 
 	}
-
-
-	@Override
-	public ReservationInfo getReservationInfo(int id) {
-		ReservationInfo reservationInfo = reservationInfoDao.findById(id);
-		
-		// sumPrice
-		int sumPrice = priceDao.getSumPrice(id);
-		reservationInfo.setSumPrice(sumPrice);
-		
-		return reservationInfo;
-	}
-
+	
 	@Override
 	public List<ReservationInfo> getReservationInfosByUser(int userId) {
 		ArrayList<ReservationInfo> infos = (ArrayList<ReservationInfo>) reservationInfoDao.findByUserId(userId);

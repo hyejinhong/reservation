@@ -102,6 +102,8 @@ public class ReservationInfoApiController {
 		
 		// 현재 로그인한 사람 userId 찾기
 		User user = userService.getUserByEmail(principal.getName());
+		System.out.println(principal.getName());
+		System.out.println("user: " + user.toString());
 		
 		// ReservationInfos		
 		List<ReservationInfo> list = reservationInfoService.getReservationInfosByUser(user.getId());
