@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Before;
@@ -36,12 +37,17 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.or.connect.reservation.config.ApplicationConfig;
 import kr.or.connect.reservation.config.SecurityConfig;
 import kr.or.connect.reservation.config.WebMvcContextConfiguration;
 import kr.or.connect.reservation.dto.ReservationInfo;
+import kr.or.connect.reservation.dto.ReservationInfoPrice;
 import kr.or.connect.reservation.dto.ReservationInfoResult;
 import kr.or.connect.reservation.dto.User;
+import kr.or.connect.reservation.service.ReservationInfoPriceService;
 import kr.or.connect.reservation.service.ReservationInfoService;
 import kr.or.connect.reservation.service.UserService;
 
@@ -56,6 +62,8 @@ public class ReservationApiControllerTest {
 	@Mock
 	ReservationInfoService infoService;
 	@Mock
+	ReservationInfoPriceService priceService;
+	@Mock
 	UserService userService;
 
 	private MockMvc mockMvc;
@@ -68,8 +76,60 @@ public class ReservationApiControllerTest {
 	}
 
 	@Test
-//	@WithMockUser(username = "dontcallme@email.com", password="1234", roles = {"USER"})
-	public void getReservationInfos() throws Exception {
+	public void write() throws Exception {
+//		HashMap<String, Object> body = new HashMap<>();
+		// Prices
+		ReservationInfoPrice prices = new ReservationInfoPrice();
+		prices.setId(333);
+		prices.setCount(123);
+		prices.setProductPriceId(12);
+		when(priceService.addReservationInfoPrices(prices)).thenReturn(333);
+
+		// RequestBody
+		HashMap<String, Object> body = Mockito.mock(HashMap.class);
+		when(body.get("productId")).thenReturn(12);
+		when(body.get("displayInfoId")).thenReturn(123);
+		when(body.get("reservationYearMonthDay")).thenReturn("2008.05.25");
+		when(body.get("userId")).thenReturn(525);
+		when(body.get("prices")).thenReturn(prices);
+		
+		
+		// body
+//		body.put("prices", prices);
+//		body.put("productId", 12);
+//		body.put("displayInfoId", 123);
+//		body.put("reservationYearMonthDay", "2008.05.25");
+//		body.put("userId", 525);
+	
+		// ReservationInfo
+		ReservationInfo reservationInfo = new ReservationInfo();
+		reservationInfo.setId(123);
+		reservationInfo.setProductId(12);
+		reservationInfo.setUserId(525);
+		when(infoService.addReservationInfo(reservationInfo)).thenReturn(123);
+		System.out.println(body);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String content = objectMapper.writeValueAsString(body);
+		objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+//		System.out.println(content);
+		
+		// ReservationInfoResult
+		ReservationInfoResult result = new ReservationInfoResult();
+		result.setId(123);
+		result.setProductId(12);
+		result.setUserId(525);
+		when(infoService.getReservationInfoResult(123)).thenReturn(result);
+		
+		RequestBuilder reqBuilder = MockMvcRequestBuilders.post("/api/reservationInfos")
+				.content(content).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON);
+		mockMvc.perform(reqBuilder).andExpect(status().isOk()).andDo(print());
+		
+		verify(infoService).addReservationInfo(reservationInfo);
+	}
+	
+	@Test
+	public void getReservationInfosByUser() throws Exception {
 		// User
 		User user = new User();
 		user.setId(525);
