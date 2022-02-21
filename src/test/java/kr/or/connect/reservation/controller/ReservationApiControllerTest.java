@@ -14,24 +14,13 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithAnonymousUser;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -40,15 +29,12 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.connect.reservation.config.ApplicationConfig;
 import kr.or.connect.reservation.config.SecurityConfig;
 import kr.or.connect.reservation.config.WebMvcContextConfiguration;
 import kr.or.connect.reservation.dto.ReservationInfo;
-import kr.or.connect.reservation.dto.ReservationInfoPrice;
-import kr.or.connect.reservation.dto.ReservationInfoResult;
 import kr.or.connect.reservation.dto.User;
 import kr.or.connect.reservation.service.ReservationInfoPriceService;
 import kr.or.connect.reservation.service.ReservationInfoService;
@@ -97,8 +83,8 @@ public class ReservationApiControllerTest {
 		
 		ReservationInfo reservationInfo = new ReservationInfo(1, 1, 525, "2008.05.25");
 		reservationInfo.setId(0);
-		System.out.println(reservationInfo.toString());
-		verify(infoService).addReservationInfo(Matchers.same(reservationInfo));
+
+		verify(infoService).addReservationInfo(Matchers.refEq(reservationInfo, "createDate", "modifyDate"));
 	}
 	
 	@Test

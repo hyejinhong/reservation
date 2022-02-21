@@ -117,5 +117,4 @@ public class ReservationInfo {
 				+ ", userId=" + userId + ", reservationDate=" + reservationDate + ", cancelFlag=" + cancelFlag
 				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + "]";
 	}
-	
 }
