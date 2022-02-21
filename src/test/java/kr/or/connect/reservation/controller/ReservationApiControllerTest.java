@@ -9,11 +9,14 @@ import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -65,7 +68,7 @@ public class ReservationApiControllerTest {
 	ReservationInfoPriceService priceService;
 	@Mock
 	UserService userService;
-
+	
 	private MockMvc mockMvc;
 
 	@Before
@@ -77,55 +80,25 @@ public class ReservationApiControllerTest {
 
 	@Test
 	public void write() throws Exception {
-//		HashMap<String, Object> body = new HashMap<>();
-		// Prices
-		ReservationInfoPrice prices = new ReservationInfoPrice();
-		prices.setId(333);
-		prices.setCount(123);
-		prices.setProductPriceId(12);
-		when(priceService.addReservationInfoPrices(prices)).thenReturn(333);
-
-		// RequestBody
-		HashMap<String, Object> body = Mockito.mock(HashMap.class);
-		when(body.get("productId")).thenReturn(12);
-		when(body.get("displayInfoId")).thenReturn(123);
-		when(body.get("reservationYearMonthDay")).thenReturn("2008.05.25");
-		when(body.get("userId")).thenReturn(525);
-		when(body.get("prices")).thenReturn(prices);
-		
-		
-		// body
-//		body.put("prices", prices);
-//		body.put("productId", 12);
-//		body.put("displayInfoId", 123);
-//		body.put("reservationYearMonthDay", "2008.05.25");
-//		body.put("userId", 525);
-	
-		// ReservationInfo
-		ReservationInfo reservationInfo = new ReservationInfo();
-		reservationInfo.setId(123);
-		reservationInfo.setProductId(12);
-		reservationInfo.setUserId(525);
-		when(infoService.addReservationInfo(reservationInfo)).thenReturn(123);
-		System.out.println(body);
+		Map<String, Object> input = new HashMap<>();
 		ObjectMapper objectMapper = new ObjectMapper();
-		String content = objectMapper.writeValueAsString(body);
-		objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-//		System.out.println(content);
-		
-		// ReservationInfoResult
-		ReservationInfoResult result = new ReservationInfoResult();
-		result.setId(123);
-		result.setProductId(12);
-		result.setUserId(525);
-		when(infoService.getReservationInfoResult(123)).thenReturn(result);
+
+		input.put("prices", "[{\"count\": 2, \"productPriceId\": 3}]");
+		input.put("productId", 1);
+		input.put("displayInfoId", 1);
+		input.put("reservationYearMonthDay", "2008.05.25");
+		input.put("userId", 525);
+		System.out.println(input);
 		
 		RequestBuilder reqBuilder = MockMvcRequestBuilders.post("/api/reservationInfos")
-				.content(content).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON);
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(input));
 		mockMvc.perform(reqBuilder).andExpect(status().isOk()).andDo(print());
 		
-		verify(infoService).addReservationInfo(reservationInfo);
+		ReservationInfo reservationInfo = new ReservationInfo(1, 1, 525, "2008.05.25");
+		reservationInfo.setId(0);
+		System.out.println(reservationInfo.toString());
+		verify(infoService).addReservationInfo(Matchers.same(reservationInfo));
 	}
 	
 	@Test

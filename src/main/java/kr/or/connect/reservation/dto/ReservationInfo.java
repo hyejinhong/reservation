@@ -20,6 +20,7 @@ public class ReservationInfo {
 //	private List<ReservationInfoPrice> prices;
 	
 	public ReservationInfo(Integer productId, Integer displayInfoId, Integer userId, String reservationDate) throws ParseException {
+//		this.id = null;
 		this.productId = productId;
 		this.displayInfoId = displayInfoId;
 		this.userId = userId;
