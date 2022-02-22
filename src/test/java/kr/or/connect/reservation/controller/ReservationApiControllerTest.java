@@ -66,9 +66,9 @@ public class ReservationApiControllerTest {
 
 	@Test
 	public void write() throws Exception {
+		// input
 		Map<String, Object> input = new HashMap<>();
 		ObjectMapper objectMapper = new ObjectMapper();
-
 		input.put("prices", "[{\"count\": 2, \"productPriceId\": 3}]");
 		input.put("productId", 1);
 		input.put("displayInfoId", 1);
@@ -117,4 +117,23 @@ public class ReservationApiControllerTest {
 		verify(infoService).getReservationInfosByUser(525);
 	}
 
+	@Test
+	public void updateReservation() throws Exception {
+		Map<String, Object> input = new HashMap<>();
+		ObjectMapper objectMapper = new ObjectMapper();
+		input.put("id", 77);
+
+		ReservationInfo reservationInfo = new ReservationInfo(1, 1, 525, "2008.05.25");
+		reservationInfo.setId(77);
+		
+		RequestBuilder reqBuilder = MockMvcRequestBuilders.put("/api/reservationInfos")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(input));
+		mockMvc.perform(reqBuilder).andExpect(status().isOk()).andDo(print());
+
+		reservationInfo.setCancelFlag(1);
+
+		when(infoService.updateReservation(77)).thenReturn("{\"result\": \"success\"}");
+		verify(infoService).updateReservation(77);
+	}
 }
