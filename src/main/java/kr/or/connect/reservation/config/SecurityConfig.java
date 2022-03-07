@@ -38,8 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {		
 		http.csrf().disable()
 		.authorizeRequests()
+		// 순서가 중요함 if문처럼
+		.antMatchers("/api/reservationInfos").hasRole("USER")
 		.antMatchers("/", "/users/loginform", "/api/**").permitAll()
-//		.antMatchers("/api/**").hasRole("USER")
 		.anyRequest().authenticated()
 		
 		.and()

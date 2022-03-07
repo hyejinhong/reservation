@@ -18,11 +18,6 @@ import org.springframework.transaction.annotation.TransactionManagementConfigure
 @PropertySource("classpath:application.properties")
 public class DBConfig implements TransactionManagementConfigurer {
 
-//	private String driverClassName = "com.mysql.jdbc.Driver";
-//	private String url = "jdbc:mysql://localhost:3306/connectdb?userUnicode=true&characterEncoding=utf8";
-//	private String username = "connectuser";
-//	private String password = "connect123!@#";
-
 	@Value("${spring.datasource.driver-class-name}")
 	private String driverClassName;
 	
@@ -57,7 +52,7 @@ public class DBConfig implements TransactionManagementConfigurer {
 		return new DataSourceTransactionManager(dataSource());
 	}
 	
-	// xml config때는 필요 없었는데 java config로 바뀌니까 이 메소드가 필요함 왜?
+	// xml으로 config 할 때는 필요 없었는데 java config로 바꾸니까 이 메소드가 필요해졌습니다. 이유가 궁금합니다.
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();

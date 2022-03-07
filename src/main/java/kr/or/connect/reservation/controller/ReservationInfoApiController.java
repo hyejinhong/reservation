@@ -67,17 +67,16 @@ public class ReservationInfoApiController {
 			int displayInfoId  = (int) body.get("displayInfoId");
 			String reservationYearMonthDay = (String) body.get("reservationYearMonthDay");
 			int userId = (int) body.get("userId");
-
 			ReservationInfo reservationInfo = new ReservationInfo(productId, displayInfoId, userId, reservationYearMonthDay);
+			
 			// 생성된 reservationInfo id
 			int generatedId = reservationInfoService.addReservationInfo(reservationInfo);
-			
+			reservationInfo.setId(generatedId);
+
 			// price 정보 추가
 			ReservationInfoPrice reservationInfoPrice = new ReservationInfoPrice(generatedId, prices.get("productPriceId"), prices.get("count"));
 			reservationInfoPriceService.addReservationInfoPrices(reservationInfoPrice);
 
-			reservationInfo.setId(generatedId);
-			
 			return reservationInfoService.getReservationInfoResult(generatedId);
 		
 		} catch (JsonParseException e) {
@@ -102,8 +101,6 @@ public class ReservationInfoApiController {
 		
 		// 현재 로그인한 사람 userId 찾기
 		User user = userService.getUserByEmail(principal.getName());
-		System.out.println(principal.getName());
-		System.out.println("user: " + user.toString());
 		
 		// ReservationInfos		
 		List<ReservationInfo> list = reservationInfoService.getReservationInfosByUser(user.getId());

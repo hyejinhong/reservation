@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
@@ -84,6 +85,7 @@ public class ReservationApiControllerTest {
 		ReservationInfo reservationInfo = new ReservationInfo(1, 1, 525, "2008.05.25");
 		reservationInfo.setId(0);
 
+		Assertions.assertEquals(input.get("userId"), reservationInfo.getUserId());;
 		verify(infoService).addReservationInfo(Matchers.refEq(reservationInfo, "createDate", "modifyDate"));
 	}
 	
