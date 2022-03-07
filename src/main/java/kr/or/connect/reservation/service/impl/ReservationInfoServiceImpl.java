@@ -21,7 +21,7 @@ public class ReservationInfoServiceImpl implements ReservationInfoService {
 	ReservationInfoDao reservationInfoDao;
 	
 	/*
-	 * 아래처럼 ReservationInfoServiceImpl 안에 ReservationInfoPriceDao를 가져와서 쓰는 것이 어색한(?) 일이 아닌지 궁금합니다.
+	 * Q. 아래처럼 ReservationInfoServiceImpl 안에 ReservationInfoPriceDao를 가져와서 쓰는 것이 어색한(?) 일이 아닌지 궁금합니다.
 	 * ReservationInfoPriceDao는 ReservationInfoPriceService에서 호출하는 것이 좀 더 좋은 코드인가요??
 	 * 만약 그렇다면, Info에 sumPrice를 set해주는 과정을 Controller에서 해야할 것 같은데 이것은 또 좋은 코드가 아니라고 생각되어서 궁금합니다..
 	 */
